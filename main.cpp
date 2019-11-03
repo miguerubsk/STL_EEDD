@@ -19,18 +19,15 @@
 #include <iostream>
 #include <math.h>
 #include <ctime>
-#include "vectordinamico.h"
-#include "ListaDEnlazada.h"
 #include "Cliente.h"
-#include "AVL.h"
 
 
 using namespace std;
 
-double calculardistaciamaslejana(vectordinamico<Cliente> v) {
+double calculardistaciamaslejana(vector<Cliente> v) {
     double distancia, maxDistancia = 0;
-    for (int i = 0; i < v.tam() - 1; i++) {
-        for (int j = i + 1; j < v.tam(); j++) {
+    for (int i = 0; i < v.size() - 1; i++) {
+        for (int j = i + 1; j < v.size(); j++) {
             distancia = v[i].distancia(v[j]);
 
             if (distancia > maxDistancia)
@@ -40,9 +37,9 @@ double calculardistaciamaslejana(vectordinamico<Cliente> v) {
     return maxDistancia;
 }
 
-void MaxMinLatLon(vectordinamico<Cliente> v, double &maxLon, double &maxLat, double &minLon, double &minLat){
+void MaxMinLatLon(vector<Cliente> v, double &maxLon, double &maxLat, double &minLon, double &minLat){
        maxLon=-9999999, maxLat=-9999999, minLon=9999999, minLat=9999999;
-       for (int i=0; i<v.tam(); i++){
+       for (int i=0; i<v.size(); i++){
            double x=v[i].GetUTM().GetLongitud();
            if (x>maxLon)
                maxLon=x;
@@ -67,7 +64,7 @@ int main(int argc, char** argv) {
         //ALTURA DEL AVL
         cout << "La altura del avl de los clientes es: " << prueba.getCliente().altura() << endl;
         //NUMERO DE CLIENTES DEL AVL
-        cout << "El numero de clientes del avl es: " << prueba.getCliente().numElementos() << endl;
+        cout << "El numero de clientes del avl es: " << prueba.getCliente().size_type << endl;
         Cliente cliente1, *buscado;
         cliente1.SetDni("24242105C");
         //BUSCAR CLIENTE CON DNI 67839521O

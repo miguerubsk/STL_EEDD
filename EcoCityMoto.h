@@ -14,9 +14,9 @@
 #ifndef ECOCITYMOTO_H
 #define ECOCITYMOTO_H
 
-#include "vectordinamico.h"
 #include "Moto.h"
-#include "AVL.h"
+#include <vector>
+#include <map>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -37,7 +37,7 @@ public:
     unsigned int getIdUltimo() const {
         return idUltimo;
     }
-    AVL<Cliente>& getCliente() {
+    std::map<std::string, Cliente>& getCliente() {
         return clientes;
     }
     void setIdUltimo(unsigned int idUltimo) {
@@ -50,8 +50,8 @@ public:
 
 private:
     unsigned int idUltimo;
-    vectordinamico<Moto> motos;
-    AVL<Cliente> clientes;
+    std::vector<Moto> motos;
+    std::map<std::string, Cliente> clientes;
     
 
 };
