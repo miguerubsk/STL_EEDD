@@ -38,7 +38,7 @@ Moto* EcoCityMoto::LocalizaMotoCercana(UTM &ubicacion){
     Moto *moto;
     
     double maxDistancia = 9999999999, distancia;
-    for(int i = 0; i<motos.tam()-1; i++){
+    for(int i = 0; i<motos.size()-1; i++){
         if(motos[i].getStatus()==BLOQUEADA){
             distancia=ubicacion.distancia(motos[i].getPosicion());
             if(distancia<maxDistancia){
@@ -113,7 +113,8 @@ void EcoCityMoto::cargarClientes(std::string filename){
                 //con todos los atributos leidos, se crea el cliente
                 //                cout<<dni<<endl;
                 Cliente client(dni, pass, nombre, direccion, dlat, dlon, this);
-                clientes.inserta(client);
+                std::pair <std::string, Cliente> aux(dni, client);
+                clientes.insert(aux);
                 if (total % 100 == 0) {
                     cout << "Leido cliente " << total << "\n  ";
                 }
@@ -173,7 +174,7 @@ void EcoCityMoto::cargarMotos(std::string filename){
 
                 //con todos los atributos leidos, se crea la moto
                 Moto moto(mat, dlat, dlon, aux);
-                motos.insertar(moto);
+                motos.push_back(moto);
                 if (total % 100 == 0) {
                     std::cout << "Leida moto " << total << "\n  ";
                 }
@@ -191,8 +192,9 @@ void EcoCityMoto::cargarMotos(std::string filename){
 Cliente* EcoCityMoto::buscarCliente(std::string dni) {
     Cliente c, *aux;
     c.SetDni(dni);
-    if(clientes.busca(c,aux)){
-        return aux;
+    std::map<std::string, Cliente>::iterator i = clientes.find(dni);
+    if(i != clientes.end()){
+        return &(*i).second;
     }
     throw std::invalid_argument("No se ha encontrado al cliente");
 }

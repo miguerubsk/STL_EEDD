@@ -22,18 +22,18 @@ void Cliente::desbloquearMoto(Moto *m) {
     UTM final;
     acceso->setIdUltimo(acceso->getIdUltimo()+1);
     Itinerario itinerario(acceso->getIdUltimo(), m->getPosicion(), final, fecha, 0, m);
-    rutas.insertarFinal(itinerario);
+    rutas.push_back(itinerario);
 }
 
 
 void Cliente::terminarTrayecto() {
-    auto iterador = rutas.iteradorFinal();
+    auto iterador = rutas.begin();
     Fecha fechafin;
     srand(time(NULL));
-    iterador.getDato().SetMinutos((fechafin.verHora()*60 + fechafin.verMin()) - (iterador.getDato().GetFecha().verHora()*60 + iterador.getDato().GetFecha().verMin()));
-    iterador.getDato().SetFin(posicion);
-    iterador.getDato().GetVehiculos()->setPosicion(posicion);
-    iterador.getDato().GetVehiculos()->seDesactiva();
+    rutas.back().SetMinutos((fechafin.verHora()*60 + fechafin.verMin()) - (rutas.back().GetFecha().verHora()*60 + rutas.back().GetFecha().verMin()));
+    rutas.back().SetFin(posicion);
+    rutas.back().GetVehiculos()->setPosicion(posicion);
+    rutas.back().GetVehiculos()->seDesactiva();
 }
 /**
      * @brief funcion para buscar la moto mas cercana al cliente en cuestion
@@ -47,7 +47,7 @@ Moto * Cliente::buscarMotoCercana() {
      * @brief funcion para devolver la lista de itinerarios
      * @return devuelve la lista doblemente enlazada de los itinerarios del cliente
 **/
-ListaDEnlazada<Itinerario>& Cliente::getItinerario() {
+list<Itinerario>& Cliente::getItinerario() {
     return rutas;
 }
 //OPERADOR << PARA CLIENTE
