@@ -4,11 +4,9 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>AVL.h</itemPath>
       <itemPath>Cliente.h</itemPath>
       <itemPath>EcoCityMoto.h</itemPath>
       <itemPath>Itinerario.h</itemPath>
-      <itemPath>ListaDEnlazada.h</itemPath>
       <itemPath>Moto.h</itemPath>
       <itemPath>UTM.h</itemPath>
       <itemPath>fecha.h</itemPath>
@@ -50,8 +48,6 @@
       </toolsSet>
       <compileType>
       </compileType>
-      <item path="AVL.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Cliente.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Cliente.h" ex="false" tool="3" flavor2="0">
@@ -63,8 +59,6 @@
       <item path="Itinerario.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Itinerario.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ListaDEnlazada.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Moto.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -101,8 +95,6 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="AVL.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Cliente.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Cliente.h" ex="false" tool="3" flavor2="0">
@@ -114,8 +106,6 @@
       <item path="Itinerario.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Itinerario.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ListaDEnlazada.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Moto.cpp" ex="false" tool="1" flavor2="0">
       </item>
