@@ -10,7 +10,6 @@
       <itemPath>Moto.h</itemPath>
       <itemPath>UTM.h</itemPath>
       <itemPath>fecha.h</itemPath>
-      <itemPath>vectordinamico.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -72,8 +71,6 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="vectordinamico.h" ex="false" tool="3" flavor2="0">
-      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
@@ -118,8 +115,6 @@
       <item path="fecha.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="vectordinamico.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

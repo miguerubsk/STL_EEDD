@@ -15,8 +15,8 @@
 #define CLIENTE_H
 
 #include "Itinerario.h"
-#include "ListaDEnlazada.h"
 #include "EcoCityMoto.h"
+#include <list>
 #include <iostream>
 #include <math.h>
 #include <random>
@@ -34,7 +34,7 @@ private:
     string pass;
     string nombre;
     string direccion;
-    ListaDEnlazada<Itinerario> rutas;
+    list<Itinerario> rutas;
     EcoCityMoto *acceso;
     UTM posicion;
 
@@ -144,13 +144,13 @@ posicion(orig.posicion), rutas(orig.rutas), acceso(orig.acceso) {
 
             int minutosRandom = 0 + rand() % (120 - 0);
             Itinerario itinerarioAux(++IdUltimo, inicio, fin, fechaRandom, minutosRandom);
-            rutas.insertarFinal(itinerarioAux);
+            rutas.push_back(itinerarioAux);
         }
     }
     void desbloquearMoto(Moto *m);
     void terminarTrayecto();
     Moto * buscarMotoCercana();
-    ListaDEnlazada<Itinerario>& getItinerario();
+    list<Itinerario>& getItinerario();
     friend ostream& operator<<(ostream & os, const Cliente & obj);
     
 };
