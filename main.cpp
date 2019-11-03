@@ -74,7 +74,7 @@ int main(int argc, char** argv) {
         cout << "Nombre: " << buscado->GetNOMBRE() << endl;
         //DESBLOQUEAR MOTO
         buscado->desbloquearMoto(buscado->buscarMotoCercana());
-        cout << "Se desbloquea la moto " << buscado->getItinerario().iteradorFinal().getdatoaux()->GetVehiculos()->GetId() << endl;
+        cout << "Se desbloquea la moto " << buscado->getItinerario().back().getdatoaux()->GetVehiculos()->GetId() << endl;
 
         UTM max(37, 3), min(38, 4);
         mt19937 rnd(time(NULL));
@@ -86,12 +86,12 @@ int main(int argc, char** argv) {
         //TERMINAR EL TRAYECTO
         buscado->terminarTrayecto();
         cout << "TERMINADO ITINERARIO" << endl;
-        cout << "Id:" << buscado->getItinerario().iteradorFinal().getdatoaux()->GetId() << endl;
-        cout << "UTM inicio:" << buscado->getItinerario().iteradorFinal().getdatoaux()->GetInicio().GetLatitud() << "<-->" << buscado->getItinerario().iteradorFinal().getDato().GetInicio().GetLongitud() << endl;
-        cout << "UTM fin:" << buscado->getItinerario().iteradorFinal().getdatoaux()->GetFin().GetLatitud() << "<-->" << buscado->getItinerario().iteradorFinal().getDato().GetFin().GetLongitud() << endl;
-        cout << "Fecha:" << buscado->getItinerario().iteradorFinal().getdatoaux()->GetFecha() << endl;
-        cout << "Duracion:" << buscado->getItinerario().iteradorFinal().getdatoaux()->GetMinutos() << endl;
-        cout << "Id de la moto:" << buscado->getItinerario().iteradorFinal().getdatoaux()->GetVehiculos()->GetId() << endl;
+        cout << "Id:" << buscado->getItinerario().back().getdatoaux()->GetId() << endl;
+        cout << "UTM inicio:" << buscado->getItinerario().back().getdatoaux()->GetInicio().GetLatitud() << "<-->" << buscado->getItinerario().back().getDato().GetInicio().GetLongitud() << endl;
+        cout << "UTM fin:" << buscado->getItinerario().back().getdatoaux()->GetFin().GetLatitud() << "<-->" << buscado->getItinerario().back().getDato().GetFin().GetLongitud() << endl;
+        cout << "Fecha:" << buscado->getItinerario().back().getdatoaux()->GetFecha() << endl;
+        cout << "Duracion:" << buscado->getItinerario().back().getdatoaux()->GetMinutos() << endl;
+        cout << "Id de la moto:" << buscado->getItinerario().back().getdatoaux()->GetVehiculos()->GetId() << endl;
     } catch (std::string &e) {
         cout << e << endl;
     } catch (std::invalid_argument &e) {
