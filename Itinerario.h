@@ -66,6 +66,7 @@ public:
     }
     void SetVehiculos(Moto* vehiculos);
     Moto* GetVehiculos();
+    std::string GuardaItinerario(); 
         
 private:
     

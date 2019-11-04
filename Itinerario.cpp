@@ -35,3 +35,17 @@ Itinerario::Itinerario(const Itinerario& orig):
 
 Itinerario::~Itinerario() {
 }
+
+std::string Itinerario::GuardaItinerario() {
+    int dia = fecha.verDia();
+    int mes = fecha.verMes();
+    int anio = fecha.verAnio();
+    int hora = fecha.verHora();
+    int min = fecha.verMin();
+    std::string lineadatos = std::to_string(id) + ";" + std::to_string(dia) + ";" + std::to_string(mes) 
+            + ";" + std::to_string(anio) + ";" + std::to_string(hora) + ";" + std::to_string(min) 
+            + ";" + std::to_string(minutos) + ";" + std::to_string(inicio.GetLatitud()) 
+            + ";" + std::to_string(inicio.GetLongitud()) + ";" + std::to_string(fin.GetLatitud())
+            + ";" + std::to_string(fin.GetLongitud());
+    return lineadatos;
+}

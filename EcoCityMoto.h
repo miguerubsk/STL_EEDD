@@ -34,27 +34,19 @@ public:
     void cargarMotos(std::string filename);
     Moto* LocalizaMotoCercana(UTM &ubicacion);
     void desbloqueaMoto(Moto *moto, Cliente *cli);
-    unsigned int getIdUltimo() const {
-        return idUltimo;
-    }
-    std::map<std::string, Cliente>& getCliente() {
-        return clientes;
-    }
-    void setIdUltimo(unsigned int idUltimo) {
-        this->idUltimo = idUltimo;
-    }
-
+    unsigned int getIdUltimo() const;
+    std::map<std::string, Cliente>& getCliente();
+    void setIdUltimo(unsigned int idUltimo);
     Cliente* buscarCliente(std::string dni); 
     bool nuevoCliente(Cliente &c);
     bool eliminarCliente(Cliente &c);
-
+    void guardaClientesItinerarios(std::string fileName);
+    void cargarItinerarios(std::string filename);
 
 private:
     unsigned int idUltimo;
     std::vector<Moto> motos;
     std::map<std::string, Cliente> clientes;
-    
-
 };
 
 #endif /* ECOCITYMOTO_H */

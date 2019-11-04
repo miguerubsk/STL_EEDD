@@ -12,57 +12,63 @@
  */
 
 #include "EcoCityMoto.h"
+
 /**
-     * @brief contrusctor por defecto de EcoCityMoto
-**/
-EcoCityMoto::EcoCityMoto(): idUltimo(0), clientes(), motos() {
+ * @brief contrusctor por defecto de EcoCityMoto
+ **/
+EcoCityMoto::EcoCityMoto() : idUltimo(0), clientes(), motos() {
     cargarClientes("clientes_v2.csv");
     cargarMotos("motos.txt");
 }
+
 /**
-     * @brief funcion del contructor copia de EcoCityMoto
-**/
-EcoCityMoto::EcoCityMoto(const EcoCityMoto& orig): clientes(orig.clientes), idUltimo(orig.idUltimo), motos(orig.motos) {
+ * @brief funcion del contructor copia de EcoCityMoto
+ **/
+EcoCityMoto::EcoCityMoto(const EcoCityMoto& orig) : clientes(orig.clientes), idUltimo(orig.idUltimo), motos(orig.motos) {
 }
+
 /**
-     * @brief destructor correspondiente de EcoCityMoto
-**/
+ * @brief destructor correspondiente de EcoCityMoto
+ **/
 EcoCityMoto::~EcoCityMoto() {
 }
+
 /**
  * @brief funcion para lozalizar la moto mas cercana utilizando la ubicacion proporcionada
  * @param A es la ubicacion para poder utilizarla a la hora de buscar la moto
  * @return devuelve la moto que ha encontrado
  **/
-Moto* EcoCityMoto::LocalizaMotoCercana(UTM &ubicacion){
+Moto* EcoCityMoto::LocalizaMotoCercana(UTM &ubicacion) {
     Moto *moto;
-    
+
     double maxDistancia = 9999999999, distancia;
-    for(int i = 0; i<motos.size()-1; i++){
-        if(motos[i].getStatus()==BLOQUEADA){
-            distancia=ubicacion.distancia(motos[i].getPosicion());
-            if(distancia<maxDistancia){
-                maxDistancia=distancia;
+    for (int i = 0; i < motos.size() - 1; i++) {
+        if (motos[i].getStatus() == BLOQUEADA) {
+            distancia = ubicacion.distancia(motos[i].getPosicion());
+            if (distancia < maxDistancia) {
+                maxDistancia = distancia;
                 moto = &motos[i];
             }
         }
     }
-    
+
     return moto;
 }
+
 /**
  * @brief funcion para desbloquear la moto del cliente en cuestion
  * @param A es la moto que deseas desbloquear
  * @param B es el puntero al cliente responsable de dicha moto
  **/
-void EcoCityMoto::desbloqueaMoto(Moto *moto, Cliente *cli){
+void EcoCityMoto::desbloqueaMoto(Moto *moto, Cliente *cli) {
     moto->seActiva(cli);
 }
+
 /**
  * @brief funcion para cargar los clientes en el avl de la clase
  * @param A es el nombre del fichero
  **/
-void EcoCityMoto::cargarClientes(std::string filename){
+void EcoCityMoto::cargarClientes(std::string filename) {
     ifstream fe; //Flujo de entrada
     string linea; //Cada linea tiene un clienete
     int total = 0; //Contador de lineas o clientes
@@ -127,11 +133,12 @@ void EcoCityMoto::cargarClientes(std::string filename){
         cerr << "No se puede abrir el fichero" << endl;
     }
 }
+
 /**
  * @brief funcion para cargar las motos en el otro avl de EscoCityMotos
  * @param A es el nombre del fichero
  **/
-void EcoCityMoto::cargarMotos(std::string filename){
+void EcoCityMoto::cargarMotos(std::string filename) {
     std::ifstream fe; //Flujo de entrada
     std::string linea; //Cada linea tiene un clienete
     int total = 0; //Contador de lineas o clientes
@@ -146,8 +153,8 @@ void EcoCityMoto::cargarMotos(std::string filename){
         getline(fe, linea); //Toma una linea del fichero
         //Mientras no se haya llegado al final del fichero
         while (!fe.eof()) {
-            
-            
+
+
             std::stringstream ss; //Stream que trabaja sobre buffer interno         
 
             if (linea != "") {
@@ -193,31 +200,65 @@ Cliente* EcoCityMoto::buscarCliente(std::string dni) {
     Cliente c, *aux;
     c.SetDni(dni);
     std::map<std::string, Cliente>::iterator i = clientes.find(dni);
-    if(i != clientes.end()){
+    if (i != clientes.end()) {
         return &(*i).second;
-        //i++;
     }
     throw std::invalid_argument("No se ha encontrado al cliente");
 }
 
 bool EcoCityMoto::nuevoCliente(Cliente& c) {
     std::map<std::string, Cliente>::iterator i = clientes.find(c.GetDNI());
-    if(i != clientes.end()){        
-    throw std::invalid_argument("El cliente ya existe");    
+    if (i != clientes.end()) {
+        throw std::invalid_argument("El cliente ya existe");
     }
-        clientes[c.GetDNI()]=c;
-        return true;
+    clientes[c.GetDNI()] = c;
+    return true;
 }
 
 bool EcoCityMoto::eliminarCliente(Cliente& c) {
-std::map<std::string, Cliente>::iterator i = clientes.find(c.GetDNI());
-    if(i != clientes.end()){
+    std::map<std::string, Cliente>::iterator i = clientes.find(c.GetDNI());
+    if (i != clientes.end()) {
         clientes.erase(i);
         return true;
     }
-throw std::invalid_argument("El cliente no existe");
+    throw std::invalid_argument("El cliente no existe");
 }
 
+void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
+    ofstream txt;
+    txt.open(fileName);
+    if (txt.good()) {
+        txt.trunc;
+        for (std::map<std::string, Cliente>::iterator iterador = clientes.begin(); iterador != clientes.end(); ++iterador) {
+            std::list<Itinerario>::iterator iterador_lista = (*iterador).second.getItinerario().begin();
+            while (iterador_lista != (*iterador).second.getItinerario().end()) {
+                if (iterador_lista->GetVehiculos() != 0) {
+                    std::string linea = iterador_lista->GuardaItinerario() + ";" + (*iterador).second.GetDNI() + ";" + iterador_lista->GetVehiculos()->GetId() + ";" + "\n";
+                    txt << linea;
+                } else {
+                    std::string linea = iterador_lista->GuardaItinerario() + ";" + (*iterador).second.GetDNI() + ";" + "0" + ";" + "\n";
+                    txt << linea;
+                }
+                iterador_lista++;
+            }
+        }
+    }
+    txt.close();
+}
+
+void EcoCityMoto::cargarItinerarios(std::string filename) {
 
 
+}
 
+std::map<std::string, Cliente>& EcoCityMoto::getCliente() {
+    return clientes;
+}
+
+unsigned int EcoCityMoto::getIdUltimo() const {
+    return idUltimo;
+}
+
+void EcoCityMoto::setIdUltimo(unsigned int idUltimo) {
+    this->idUltimo = idUltimo;
+}
