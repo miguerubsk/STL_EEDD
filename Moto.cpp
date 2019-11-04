@@ -16,6 +16,9 @@
  * @brief constructor por defecto de moto
  **/
 Moto::Moto(): id(""), posicion(0, 0), estado(BLOQUEADA), usadoPor(0) {
+    srand(time(NULL));
+    float aux = rand()%(100-0);
+    porcentajeBateria=aux;
 }
 
 void Moto::setEstado(Status estado) {
@@ -40,6 +43,20 @@ void Moto::setPosicion(UTM posicion) {
 
 void Moto::setId(std::string id) {
     this->id = id;
+}
+
+void Moto::setPorcentajeBateria(float porcentajeBateria) {
+    if(porcentajeBateria<15) this->setEstado(SINBATERIA);
+        if (porcentajeBateria >= 0 && porcentajeBateria <= 100) {
+        this->porcentajeBateria = porcentajeBateria;
+    } else {
+        throw std::invalid_argument("Porcentaje de bateria erroneo");
+    }
+    
+}
+
+float Moto::getPorcentajeBateria() const {
+    return porcentajeBateria;
 }
 /**
  * @brief constructor copia de moto
@@ -117,3 +134,28 @@ void Moto::seDesactiva(){
     estado=BLOQUEADA;
     usadoPor=0;
 }
+
+std::string Moto::GetId() const {
+    return id;
+}
+
+Moto::Moto(std::string _id, double _latitud, double _longitud, int _estado, float _porcentajeBateria) :
+id(_id), posicion(_latitud, _longitud) {
+    if ((_porcentajeBateria<=0 && _porcentajeBateria >= 100) && _porcentajeBateria != UINT_MAX) throw std::invalid_argument("Porcentaje de bateria erroneo");
+    
+    if ((_porcentajeBateria>=0 && _porcentajeBateria <= 100) && _porcentajeBateria != UINT_MAX) {
+        porcentajeBateria=_porcentajeBateria;
+    } else {
+    srand(time(NULL));
+    float aux = rand()%(100-0);
+    porcentajeBateria=aux;
+        //throw std::invalid_argument("Porcentaje de bateria erroneo");
+    }
+    switch (_estado) {
+        case 0: estado = BLOQUEADA;
+        case 1: estado = ACTIVA;
+        case 2: estado = SINBATERIA;
+        case 3: estado = ROTA;
+    }
+}
+
