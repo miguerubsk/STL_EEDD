@@ -62,7 +62,7 @@ float Moto::getPorcentajeBateria() const {
  * @brief constructor copia de moto
  * @param A es la moto de la cual queremos hacer la copia
  **/
-Moto::Moto(const Moto& orig): id(orig.id), usadoPor(orig.usadoPor), estado(orig.estado), posicion(orig.posicion) {
+Moto::Moto(const Moto& orig): id(orig.id), usadoPor(orig.usadoPor), estado(orig.estado), posicion(orig.posicion), porcentajeBateria(orig.porcentajeBateria) {
 }
 /**
  * @brief destructor correpondiente de moto
