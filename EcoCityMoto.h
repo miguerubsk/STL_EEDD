@@ -45,7 +45,8 @@ public:
     }
 
     Cliente* buscarCliente(std::string dni); 
-
+    bool nuevoCliente(Cliente &c);
+    bool eliminarCliente(Cliente &c);
 
 
 private:

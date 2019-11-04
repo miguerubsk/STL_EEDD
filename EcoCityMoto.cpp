@@ -199,3 +199,25 @@ Cliente* EcoCityMoto::buscarCliente(std::string dni) {
     }
     throw std::invalid_argument("No se ha encontrado al cliente");
 }
+
+bool EcoCityMoto::nuevoCliente(Cliente& c) {
+    std::map<std::string, Cliente>::iterator i = clientes.find(c.GetDNI());
+    if(i != clientes.end()){        
+    throw std::invalid_argument("El cliente ya existe");    
+    }
+        clientes[c.GetDNI()]=c;
+        return true;
+}
+
+bool EcoCityMoto::eliminarCliente(Cliente& c) {
+std::map<std::string, Cliente>::iterator i = clientes.find(c.GetDNI());
+    if(i != clientes.end()){
+        clientes.erase(i);
+        return true;
+    }
+throw std::invalid_argument("El cliente no existe");
+}
+
+
+
+
