@@ -195,6 +195,7 @@ Cliente* EcoCityMoto::buscarCliente(std::string dni) {
     std::map<std::string, Cliente>::iterator i = clientes.find(dni);
     if(i != clientes.end()){
         return &(*i).second;
+        //i++;
     }
     throw std::invalid_argument("No se ha encontrado al cliente");
 }
