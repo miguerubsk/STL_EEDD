@@ -60,3 +60,11 @@ list<Itinerario>& Cliente::getItinerario() {
 ostream& operator<<(ostream & os, const Cliente & obj) {
     return os << "DNI: " << obj.GetDNI() << " | " << "Nombre: " << obj.GetNOMBRE() << " | " << "Direccion: " << obj.GetDIRECCION() << " Id del ultimo " << obj.acceso->getIdUltimo() << " | " << "\n";
 }
+
+
+std::string Cliente::GuardaCliente() {
+    std::string lineadatos = dni + ";" + pass + ";" + nombre 
+            + ";" + direccion + ";" + std::to_string(posicion.GetLatitud()) + ";" + std::to_string(posicion.GetLongitud()) 
+            + ";" + std::to_string(rutas.size());
+    return lineadatos;
+}

@@ -152,6 +152,7 @@ posicion(orig.posicion), rutas(orig.rutas), acceso(orig.acceso) {
     Moto * buscarMotoCercana();
     list<Itinerario>& getItinerario();
     friend ostream& operator<<(ostream & os, const Cliente & obj);
+    std::string GuardaCliente();
     
 };
 

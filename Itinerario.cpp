@@ -46,6 +46,6 @@ std::string Itinerario::GuardaItinerario() {
             + ";" + std::to_string(anio) + ";" + std::to_string(hora) + ";" + std::to_string(min) 
             + ";" + std::to_string(minutos) + ";" + std::to_string(inicio.GetLatitud()) 
             + ";" + std::to_string(inicio.GetLongitud()) + ";" + std::to_string(fin.GetLatitud())
-            + ";" + std::to_string(fin.GetLongitud());
+            + ";" + std::to_string(fin.GetLongitud()) + ";" + vehiculos->GetId();
     return lineadatos;
 }
