@@ -31,6 +31,7 @@ EcoCityMoto::EcoCityMoto(const EcoCityMoto& orig) : clientes(orig.clientes), idU
  * @brief destructor correspondiente de EcoCityMoto
  **/
 EcoCityMoto::~EcoCityMoto() {
+    guardaClientesItinerarios("piauwf.txt");
 }
 
 /**
@@ -302,7 +303,7 @@ void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
     txt.open(fileName);
     if (txt.good()) {
         txt.trunc;
-        txt << "NIF;clave;nomape;dirección;latitud;longitud"<<std::endl;
+        txt << "NIF;clave;nomape;dirección;latitud;longitud;nItinerarios"<<std::endl;
         for (std::map<std::string, Cliente>::iterator iterador = clientes.begin(); iterador != clientes.end(); ++iterador) {
             std::list<Itinerario>::iterator iterador_lista = (*iterador).second.getItinerario().begin();
             while (iterador_lista != (*iterador).second.getItinerario().end()) {

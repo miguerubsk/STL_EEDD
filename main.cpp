@@ -110,6 +110,7 @@ int main(int argc, char** argv) {
 //        cout << "Matricula de la moto: " << m->GetId()<<endl; 
 //        cout << "DNI del cliente que usa dicha moto: " << m->getUsadoPor()->GetDNI()<<endl;
         
+        
     } catch (std::string &e) {
         cout << e << endl;
     } catch (std::invalid_argument &e) {
