@@ -29,6 +29,37 @@ void Cliente::addItinerario(int id, Fecha fecha,int minutos, Moto *moto, UTM ini
     //TODO
 }
 
+void Cliente::crearItinerarios(int num, int IdUltimo, const UTM& min, const UTM& max) {
+        double lat;
+        double longi;
+        for (int i = 0; i < num; i++) {
+            //GENERAR COORDENADAS RANDOM
+            std::mt19937 rnd(std::time(NULL));
+            std::uniform_real_distribution<> latitud(min.GetLatitud(), max.GetLatitud());
+            std::uniform_real_distribution<> longitud(min.GetLongitud(), max.GetLongitud());
+            UTM inicio(latitud(rnd), longitud(rnd));
+            UTM fin(latitud(rnd), longitud(rnd));
+
+            //GENERAR FECHA RANDOM
+            Fecha fechaRandom;
+            srand(time(NULL) + IdUltimo + i);
+            int dia = 1 + rand() % (28 - 1);
+            int mes = 1 + rand() % (12 - 1);
+            int hora = 0 + rand() % (24 - 0);
+            int minutos = 0 + rand() % (60 - 0);
+            fechaRandom.asignarDia(dia, mes, 2019);
+            fechaRandom.asignarHora(hora, minutos);
+            
+            Moto *moto = &(acceso->GetMotos()->at(54));
+            
+            int minutosRandom = 0 + rand() % (120 - 0);
+            Itinerario itinerarioAux(++IdUltimo, inicio, fin, fechaRandom, minutosRandom, moto);
+            
+            rutas.push_back(itinerarioAux);
+        }
+}
+
+
 void Cliente::terminarTrayecto() {
     auto iterador = rutas.begin();
     Fecha fechafin;
@@ -78,4 +109,3 @@ UTM Cliente::getPosicion() const {
 
 string Cliente::getPass() const {
     return pass;
-}

@@ -14,6 +14,7 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
 
+
 #include "Itinerario.h"
 #include "EcoCityMoto.h"
 #include <list>
@@ -24,9 +25,11 @@
 #include <stdlib.h>
 #include <time.h>
 
+class EcoCityMoto;
+
 using namespace std;
 
-class EcoCityMoto;
+
 
 class Cliente {
 private:
@@ -122,32 +125,7 @@ public:
         return sqrt(pow((cli.posicion.GetLatitud() - this->posicion.GetLatitud()), 2) + pow((cli.posicion.GetLongitud() - this->posicion.GetLongitud()), 2));
     }
 
-    void crearItinerarios(int num, int IdUltimo, const UTM &min, const UTM &max) {
-        double lat;
-        double longi;
-        for (int i = 0; i < num; i++) {
-            //GENERAR COORDENADAS RANDOM
-            std::mt19937 rnd(std::time(NULL));
-            std::uniform_real_distribution<> latitud(min.GetLatitud(), max.GetLatitud());
-            std::uniform_real_distribution<> longitud(min.GetLongitud(), max.GetLongitud());
-            UTM inicio(latitud(rnd), longitud(rnd));
-            UTM fin(latitud(rnd), longitud(rnd));
-
-            //GENERAR FECHA RANDOM
-            Fecha fechaRandom;
-            srand(time(NULL) + IdUltimo + i);
-            int dia = 1 + rand() % (28 - 1);
-            int mes = 1 + rand() % (12 - 1);
-            int hora = 0 + rand() % (24 - 0);
-            int minutos = 0 + rand() % (60 - 0);
-            fechaRandom.asignarDia(dia, mes, 2019);
-            fechaRandom.asignarHora(hora, minutos);
-
-            int minutosRandom = 0 + rand() % (120 - 0);
-            Itinerario itinerarioAux(++IdUltimo, inicio, fin, fechaRandom, minutosRandom);
-            rutas.push_back(itinerarioAux);
-        }
-    }
+    void crearItinerarios(int num, int IdUltimo, const UTM &min, const UTM &max);
     void desbloquearMoto(Moto *m);
     void terminarTrayecto();
     Moto * buscarMotoCercana();
@@ -157,6 +135,7 @@ public:
     std::string GuardaCliente();
     UTM getPosicion() const;
     string getPass() const;
+
     
 };
 

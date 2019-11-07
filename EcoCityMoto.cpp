@@ -31,7 +31,7 @@ EcoCityMoto::EcoCityMoto(const EcoCityMoto& orig) : clientes(orig.clientes), idU
  * @brief destructor correspondiente de EcoCityMoto
  **/
 EcoCityMoto::~EcoCityMoto() {
-    guardaClientesItinerarios("piauwf.txt");
+    guardaClientesItinerarios("prueba.sav");
 }
 
 /**
@@ -298,8 +298,13 @@ bool EcoCityMoto::eliminarCliente(Cliente& c) {
     throw std::invalid_argument("El cliente no existe");
 }
 
+std::vector<Moto>* EcoCityMoto::GetMotos() {
+    return &motos;
+}
+
 void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
 ofstream fs;                    //Flujo de salida
+
     
     //Variables auxiliares para almacenar los valores leídos
     
