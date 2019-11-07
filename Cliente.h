@@ -37,9 +37,11 @@ private:
     list<Itinerario> rutas;
     EcoCityMoto *acceso;
     UTM posicion;
-
+    
 
 public:
+    
+    void addItinerario(int id, Fecha fecha,int minutos, Moto *moto, UTM inicio, UTM fin);
     //Constructor
 
     Cliente() : dni("0"), pass("0"), nombre("0"), direccion("0"), posicion(0.0, 0.0), rutas() {
@@ -49,9 +51,8 @@ public:
     dni(_dni), pass(_pass), nombre(_nombre), direccion(_direccion), posicion(_latitud, _longitud), acceso(_acceso) {
     }
 
-    Cliente(const Cliente& orig) : dni(orig.dni), pass(orig.pass), nombre(orig.nombre), direccion(orig.direccion),
-posicion(orig.posicion), rutas(orig.rutas), acceso(orig.acceso) {
-}
+    Cliente(const Cliente& orig) : dni(orig.dni), pass(orig.pass), nombre(orig.nombre), direccion(orig.direccion),posicion(orig.posicion), rutas(orig.rutas), acceso(orig.acceso) {
+    }
     
     string GetDNI() const {
         return dni;
@@ -151,6 +152,7 @@ posicion(orig.posicion), rutas(orig.rutas), acceso(orig.acceso) {
     void terminarTrayecto();
     Moto * buscarMotoCercana();
     list<Itinerario>& getItinerario();
+    
     friend ostream& operator<<(ostream & os, const Cliente & obj);
     
 };

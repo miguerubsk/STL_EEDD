@@ -25,6 +25,9 @@ void Cliente::desbloquearMoto(Moto *m) {
     rutas.push_back(itinerario);
 }
 
+void Cliente::addItinerario(int id, Fecha fecha,int minutos, Moto *moto, UTM inicio, UTM fin){
+    //TODO
+}
 
 void Cliente::terminarTrayecto() {
     auto iterador = rutas.begin();
