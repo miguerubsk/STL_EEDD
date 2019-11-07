@@ -105,6 +105,10 @@ int main(int argc, char** argv) {
         cout << "Cliente encontrado: " << endl;
         cout << "DNI: " << encontrado->GetDNI() << endl;
         cout << "Nombre: " << encontrado->GetNOMBRE() << endl;
+        cout<<"Buscando moto cercana"<<endl;
+        Moto *m=encontrado->buscarMotoCercana();
+        cout << "Matricula de la moto: " << m->GetId()<<endl; 
+        cout << "DNI del cliente que usa dicha moto: " << m->getUsadoPor()->GetDNI()<<endl;
         
     } catch (std::string &e) {
         cout << e << endl;
