@@ -31,7 +31,7 @@ EcoCityMoto::EcoCityMoto(const EcoCityMoto& orig) : clientes(orig.clientes), idU
  * @brief destructor correspondiente de EcoCityMoto
  **/
 EcoCityMoto::~EcoCityMoto() {
-    guardaClientesItinerarios("piauwf.txt");
+    guardaClientesItinerarios("prueba.sav");
 }
 
 /**
@@ -298,27 +298,46 @@ bool EcoCityMoto::eliminarCliente(Cliente& c) {
     throw std::invalid_argument("El cliente no existe");
 }
 
+std::vector<Moto>* EcoCityMoto::GetMotos() {
+    return &motos;
+}
+
 void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
-    ofstream txt;
-    txt.open(fileName);
-    if (txt.good()) {
-        txt.trunc;
-        txt << "NIF;clave;nomape;dirección;latitud;longitud;nItinerarios"<<std::endl;
-        for (std::map<std::string, Cliente>::iterator iterador = clientes.begin(); iterador != clientes.end(); ++iterador) {
-            std::list<Itinerario>::iterator iterador_lista = (*iterador).second.getItinerario().begin();
-            while (iterador_lista != (*iterador).second.getItinerario().end()) {
-                if (iterador_lista->GetVehiculos() != 0) {
-                    std::string linea = iterador_lista->GuardaItinerario() + ";" + (*iterador).second.GetDNI() + ";" + iterador_lista->GetVehiculos()->GetId() + ";" + "\n";
-                    txt << linea;
-                } else {
-                    std::string linea = iterador_lista->GuardaItinerario() + ";" + (*iterador).second.GetDNI() + ";" + "0" + ";" + "\n";
-                    txt << linea;
-                }
-                iterador_lista++;
+    ofstream fs;                    //Flujo de salida
+    
+    //Variables auxiliares para almacenar los valores leídos
+    
+    //Asociamos el flujo al fichero 
+    fs.open(fileName,ofstream::trunc);
+    
+    if(fs.good()){
+        map<string,Cliente>::iterator it=clientes.begin();
+        fs << "NIF;clave;nomape;dirección;latitud;longitud;nIti" << endl;
+        while (it!=clientes.end()){
+            Cliente cli=it->second;
+           // if (cli.GetDni()=="52525252X")
+             //   cout << ",";
+            list<Itinerario> r=cli.getItinerario();
+            list<Itinerario>::iterator it2=r.begin();
+            fs << cli.GetDNI() <<";"<< cli.getPass() <<";"<< cli.GetNOMBRE() <<";"<<
+                  cli.GetDIRECCION() <<";"<< cli.getPosicion().GetLatitud() <<";"<<
+                  cli.getPosicion().GetLongitud() <<";"<< cli.getItinerario().size() << endl;
+            while (it2!=r.end()){
+                fs << it2->GetId() <<";"<< it2->GetInicio().GetLatitud() <<";"<<
+                   it2->GetInicio().GetLongitud() <<";"<< it2->GetFin().GetLatitud() <<";"<<
+                   it2->GetFin().GetLongitud() <<";"<< it2->GetFecha().verDia() <<";"<<
+                   it2->GetFecha().verMes() <<";"<< it2->GetFecha().verAnio() <<";"<<
+                   it2->GetFecha().verHora() <<";"<< it2->GetFecha().verMin() <<";"<< 
+                   it2->GetMinutos() <<";"/*<< it2->GetVehiculos()->GetId()*/ << endl;
+                it2++;
             }
+            it++;
         }
+    
+        fs.close(); //Cerramos el flujo de entrada        
+    }else{
+        std::cerr<<"No se puede crear el fichero"<<endl;
     }
-    txt.close();
 }
 
 
