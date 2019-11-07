@@ -155,6 +155,8 @@ public:
     
     friend ostream& operator<<(ostream & os, const Cliente & obj);
     std::string GuardaCliente();
+    UTM getPosicion() const;
+    string getPass() const;
     
 };
 

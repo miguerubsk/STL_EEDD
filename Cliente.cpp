@@ -71,3 +71,11 @@ std::string Cliente::GuardaCliente() {
             + ";" + std::to_string(rutas.size());
     return lineadatos;
 }
+
+UTM Cliente::getPosicion() const {
+    return posicion;
+}
+
+string Cliente::getPass() const {
+    return pass;
+}
