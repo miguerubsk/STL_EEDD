@@ -30,8 +30,6 @@ public:
     EcoCityMoto();
     EcoCityMoto(const EcoCityMoto& orig);
     virtual ~EcoCityMoto();
-    void cargarClientes(std::string filename);
-    void cargarMotos(std::string filename);
     Moto* LocalizaMotoCercana(UTM &ubicacion);
     void desbloqueaMoto(Moto *moto, Cliente *cli);
     unsigned int getIdUltimo() const;
@@ -40,13 +38,16 @@ public:
     Cliente* buscarCliente(std::string dni); 
     bool nuevoCliente(Cliente &c);
     bool eliminarCliente(Cliente &c);
-    void guardaClientesItinerarios(std::string fileName);
-    void cargarItinerarios(std::string filename);
 
 private:
+
     unsigned int idUltimo;
     std::vector<Moto> motos;
     std::map<std::string, Cliente> clientes;
+    
+    void cargarClientes(std::string filename);
+    void cargarMotos(std::string filename);
+    void guardaClientesItinerarios(std::string fileName);
 };
 
 #endif /* ECOCITYMOTO_H */

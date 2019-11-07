@@ -74,7 +74,9 @@ void EcoCityMoto::cargarClientes(std::string filename) {
     int total = 0; //Contador de lineas o clientes
 
     //Variables auxiliares para almacenar los valores leidos
-    string dni, nombre, pass, direccion, latitud, longitud;
+    string dni, nombre, pass, direccion, latitud, longitud, nItinerariosAux, id, dia, mes, anio, hora, minutosfecha, minutositinerario, moto;
+    double maxLon=-9999999, maxLat=-9999999, minLon=9999999, minLat=9999999;
+    int nItinerarios, idUltimoAux=0;
     double dlat, dlon;
 
 
@@ -96,42 +98,113 @@ void EcoCityMoto::cargarClientes(std::string filename) {
             if (total > 1) {
                 //Inicializamos el contenido de ss
                 ss << linea;
-
                 //Leemos el NIF
                 getline(ss, dni, ';'); //El caracter ; se lee y se elimina de ss
-
                 //Leemos el pass
                 getline(ss, pass, ';'); //El carater ; se lee y se elimina de ss
-
                 //Leemos el nombre
                 getline(ss, nombre, ';'); //El carater ; se lee y se elimina de ss
-
                 //Leemos la direcciÃ³n
                 getline(ss, direccion, ';'); //El carater ; se lee y se elimina de ss
-
                 //Leemos la latitud y longitud
                 getline(ss, latitud, ';'); //El carater ; se lee y se elimina de ss
-                getline(ss, longitud, ';'); //El carater ; se lee y se elimina de ss
-
+                getline(ss, longitud, ';'); //El carater ; se lee y se elimina de ss                
+                
                 dlat = stod(latitud);
                 dlon = stod(longitud);
+                //calculamos Latitud y longitud max y min
+                if (dlon>maxLon)
+                    maxLon=dlon;
+                else
+                    if (dlon<minLon)
+                        minLon=dlon;
+
+                if (dlat>maxLat)
+                    maxLat=dlat;
+                else
+                    if (dlat<minLat)
+                        minLat=dlat;
 
                 //con todos los atributos leidos, se crea el cliente
                 //                cout<<dni<<endl;
                 Cliente client(dni, pass, nombre, direccion, dlat, dlon, this);
-                std::pair <std::string, Cliente> aux(dni, client);
-                clientes.insert(aux);
+                
+                getline(ss, nItinerariosAux, ';'); //Leemos el número de itinerarios
+                //Comrueba si hay itinerarios
+                if(nItinerariosAux == ""){
+                    //Si no hay crea algunos aleatorios
+                    int num = rand()%100 +1;
+                    client.crearItinerarios(num, idUltimoAux, minLat, maxLat);
+                    idUltimoAux+=num;
+                }else{
+                    //Si hay los lee
+                    nItinerarios = stoi(nItinerariosAux);
+                    while (nItinerarios != 0){
+                        nItinerarios--;
+                        //Leemos el id
+                        getline(ss, id, ';'); //El carácter ; se lee y se elimina de ss
+                        //Leemos el dia de la fecha
+                        getline(ss, dia, ';'); //El caráter ; se lee y se elimina de ss
+                        //Leemos el mes de la fecha
+                        getline(ss, mes, ';'); //El caráter ; se lee y se elimina de ss
+                        //Leemos el año de la fecha
+                        getline(ss, anio, ';'); //El caráter ; se lee y se elimina de ss
+                        //Leemos la hora de la fecha
+                        getline(ss, hora, ';'); //El caráter ; se lee y se elimina de ss
+                        //Leemos los minutos de la fecha
+                        getline(ss, minutosfecha, ';'); //El caráter ; se lee y se elimina de ss
+                        
+                        //Creamos la fecha
+                        Fecha fechaAux(stoi(dia), stoi(mes), stoi(anio), stoi(hora), stoi(minutosfecha));
+                        
+                        //Leemos los minutos del itinerario
+                        getline(ss, minutositinerario, ';'); //El caráter ; se lee y se elimina de ss
+
+                        //Leemos la latitud y longitud de inicio
+                        getline(ss, latitud, ';'); //El caráter ; se lee y se elimina de ss
+                        getline(ss, longitud, ';'); //El caráter ; se lee y se elimina de ss
+
+                        dlat = stod(latitud);
+                        dlon = stod(longitud);
+
+                        UTM inicio(dlat, dlon);
+
+                        //Leemos la latitud y longitud de fin
+                        getline(ss, latitud, ';'); //El caráter ; se lee y se elimina de ss
+                        getline(ss, longitud, ';'); //El caráter ; se lee y se elimina de ss
+
+                        dlat = stod(latitud);
+                        dlon = stod(longitud);
+
+                        UTM fin(dlat, dlon);
+                        //Leemos la matricula de la moto
+                        getline(ss, moto, ';'); //El caráter ; se lee y se elimina de ss
+
+                        //Buscamos la moto
+                        Moto *motoaux = 0;
+                        for (int i = 0; i < motos.size(); i++) {
+                            if (motos[i].getId() == moto) {
+                                motoaux = &motos[i];
+                                break;
+                            }
+                        }
+                        
+                        client.addItinerario(stoi(id), fechaAux, stoi(minutositinerario), motoaux, inicio, fin);
+                    }
+                }
+                std::pair <std::string, Cliente> par(dni, client);
+                clientes.insert(par);
                 if (total % 100 == 0) {
                     cout << "Leido cliente " << total << "\n  ";
                 }
             }
+            getline(ss,linea);
         }
-
         cout << "Total de clientes en el fichero: " << total << endl;
         fe.close(); //Cerramos el flujo de entrada
-    } else {
+    }else {
         cerr << "No se puede abrir el fichero" << endl;
-    }
+    }    
 }
 
 /**
@@ -229,6 +302,7 @@ void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
     txt.open(fileName);
     if (txt.good()) {
         txt.trunc;
+        txt << "NIF;clave;nomape;dirección;latitud;longitud"<<std::endl;
         for (std::map<std::string, Cliente>::iterator iterador = clientes.begin(); iterador != clientes.end(); ++iterador) {
             std::list<Itinerario>::iterator iterador_lista = (*iterador).second.getItinerario().begin();
             while (iterador_lista != (*iterador).second.getItinerario().end()) {
@@ -246,10 +320,7 @@ void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
     txt.close();
 }
 
-void EcoCityMoto::cargarItinerarios(std::string filename) {
 
-
-}
 
 std::map<std::string, Cliente>& EcoCityMoto::getCliente() {
     return clientes;
