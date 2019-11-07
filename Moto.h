@@ -28,11 +28,11 @@ enum Status {BLOQUEADA,ACTIVA,SINBATERIA,ROTA};
 class Moto {
 public:
     Moto();
+    Moto(const Moto& orig);
     Moto(std::string _id, double _latitud, double _longitud, int _estado, float _porcentajeBateria=UINT_MAX);
     UTM &getPosicion();
     std::string getId() const;
     Status &getStatus();
-    Moto(const Moto& orig);
     virtual ~Moto();
     Moto& operator=(const Moto &orig);
     bool operator<(const Moto &orig);

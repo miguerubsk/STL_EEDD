@@ -50,13 +50,15 @@ void Cliente::crearItinerarios(int num, int IdUltimo, const UTM& min, const UTM&
             fechaRandom.asignarDia(dia, mes, 2019);
             fechaRandom.asignarHora(hora, minutos);
             
-            Moto *moto = &(acceso->GetMotos()->at(54));
+            //Moto *moto = &(acceso->GetMotos()->at(0));
             
             int minutosRandom = 0 + rand() % (120 - 0);
-            Itinerario itinerarioAux(++IdUltimo, inicio, fin, fechaRandom, minutosRandom, moto);
+            Itinerario itinerarioAux(++IdUltimo, inicio, fin, fechaRandom, minutosRandom);
             
             rutas.push_back(itinerarioAux);
         }
+        int a = acceso->GetMotos()->size();
+        cout<<"HAY: "<<a<<" MOTOS EN EL VECTOR"<<endl;
 }
 
 
@@ -109,3 +111,4 @@ UTM Cliente::getPosicion() const {
 
 string Cliente::getPass() const {
     return pass;
+}
