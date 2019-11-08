@@ -263,7 +263,7 @@ void EcoCityMoto::cargarMotos(std::string filename) {
             getline(fe, linea); //Toma una linea del fichero
         }
 
-        std::cout << "Total de motos en el fichero: " << total << std::endl;
+        std::cout << "Total de motos en el fichero: " << motos.size()<< std::endl;
         fe.close(); //Cerramos el flujo de entrada
     } else {
         std::cerr << "No se puede abrir el fichero" << std::endl;
@@ -353,4 +353,14 @@ unsigned int EcoCityMoto::getIdUltimo() const {
 
 void EcoCityMoto::setIdUltimo(unsigned int idUltimo) {
     this->idUltimo = idUltimo;
+}
+
+std::vector<Moto> EcoCityMoto::localizaMotosSinBateria() {
+    std::vector<Moto> aux;
+    for (int i = 0; i<this->motos.size(); i++) {
+        if (motos[i].getPorcentajeBateria() < 15) {
+            aux.push_back(this->motos[i]);
+        }
+    }
+    return aux;
 }

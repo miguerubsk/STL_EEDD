@@ -39,6 +39,7 @@ public:
     bool nuevoCliente(Cliente &c);
     bool eliminarCliente(Cliente &c);
     std::vector<Moto>* GetMotos();
+    std::vector<Moto> localizaMotosSinBateria();
     
 
 private:

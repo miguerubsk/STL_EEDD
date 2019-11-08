@@ -111,13 +111,15 @@ public:
     }
 
     Cliente& operator=(const Cliente &orig) {
-        dni = orig.dni;
-        nombre = orig.nombre;
-        direccion = orig.direccion;
-        pass = orig.pass;
-        posicion = orig.posicion;
-        rutas = orig.rutas;
-        acceso = orig.acceso;
+        if (this != &orig) {
+            dni = orig.dni;
+            nombre = orig.nombre;
+            direccion = orig.direccion;
+            pass = orig.pass;
+            posicion = orig.posicion;
+            rutas = orig.rutas;
+            acceso = orig.acceso;
+        }
         return *this;
     }
 

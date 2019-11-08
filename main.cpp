@@ -110,7 +110,10 @@ int main(int argc, char** argv) {
 //        cout << "Matricula de la moto: " << m->GetId()<<endl; 
 //        cout << "DNI del cliente que usa dicha moto: " << m->getUsadoPor()->GetDNI()<<endl;
         
-        
+        cout<<"Nº de itinerarios del cliente: "<<encontrado->getItinerario().size()<<endl;
+        std::vector<Moto> probar;
+        probar= prueba.localizaMotosSinBateria();
+        cout<<"Hay "<<probar.size()<<" motos sin bateria."<<endl;
     } catch (std::string &e) {
         cout << e << endl;
     } catch (std::invalid_argument &e) {

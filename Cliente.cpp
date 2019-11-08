@@ -17,6 +17,7 @@
      * @param A es la moto en cuestion que queremos desbloquear
 **/
 void Cliente::desbloquearMoto(Moto *m) {
+    if (m == 0) throw std::string("Cliente::desbloquearMoto: la moto es 0.");
     acceso->desbloqueaMoto(m, this);
     Fecha fecha;
     UTM final;
@@ -57,8 +58,8 @@ void Cliente::crearItinerarios(int num, int IdUltimo, const UTM& min, const UTM&
             
             rutas.push_back(itinerarioAux);
         }
-        int a = acceso->GetMotos()->size();
-        cout<<"HAY: "<<a<<" MOTOS EN EL VECTOR"<<endl;
+        //int a = acceso->GetMotos()->size();
+        //cout<<"HAY: "<<a<<" MOTOS EN EL VECTOR"<<endl;
 }
 
 
