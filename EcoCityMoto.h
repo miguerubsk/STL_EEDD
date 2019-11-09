@@ -40,6 +40,7 @@ public:
     bool eliminarCliente(Cliente &c);
     std::vector<Moto>* GetMotos();
     std::vector<Moto> localizaMotosSinBateria();
+    Moto* GetMotoRand();
     
 
 private:

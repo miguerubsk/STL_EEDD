@@ -114,6 +114,7 @@ int main(int argc, char** argv) {
         std::vector<Moto> probar;
         probar= prueba.localizaMotosSinBateria();
         cout<<"Hay "<<probar.size()<<" motos sin bateria."<<endl;
+        
     } catch (std::string &e) {
         cout << e << endl;
     } catch (std::invalid_argument &e) {

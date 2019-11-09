@@ -17,8 +17,8 @@
  * @brief contrusctor por defecto de EcoCityMoto
  **/
 EcoCityMoto::EcoCityMoto() : idUltimo(0), clientes(), motos() {
-    cargarClientes("clientes_v2.csv");
     cargarMotos("motos.txt");
+    cargarClientes("clientes_v2.csv");
 }
 
 /**
@@ -329,7 +329,7 @@ ofstream fs;                    //Flujo de salida
                    it2->GetFin().GetLongitud() <<";"<< it2->GetFecha().verDia() <<";"<<
                    it2->GetFecha().verMes() <<";"<< it2->GetFecha().verAnio() <<";"<<
                    it2->GetFecha().verHora() <<";"<< it2->GetFecha().verMin() <<";"<< 
-                   it2->GetMinutos() <<";"/*<< it2->GetVehiculos()->GetId()*/ << endl;
+                   it2->GetMinutos() <<";"<< it2->GetVehiculos()->GetId() << endl;
                 it2++;
             }
             it++;
@@ -363,4 +363,10 @@ std::vector<Moto> EcoCityMoto::localizaMotosSinBateria() {
         }
     }
     return aux;
+}
+
+Moto* EcoCityMoto::GetMotoRand(){
+    int aux = rand()%1000;
+//    cout << motos[aux].GetId();
+    return &(motos[aux]);
 }
