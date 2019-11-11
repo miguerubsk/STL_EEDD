@@ -29,7 +29,7 @@ class Moto {
 public:
     Moto();
     Moto(const Moto& orig);
-    Moto(std::string _id, double _latitud, double _longitud, int _estado, float _porcentajeBateria=UINT_MAX);
+    Moto(std::string _id, double _latitud, double _longitud, int _estado, float _porcentajeBateria=100);
     UTM &getPosicion();
     std::string getId() const;
     Status &getStatus();

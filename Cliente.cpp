@@ -27,7 +27,9 @@ void Cliente::desbloquearMoto(Moto *m) {
 }
 
 void Cliente::addItinerario(int id, Fecha fecha,int minutos, Moto *moto, UTM inicio, UTM fin){
-    //TODO
+    //TODO int _id, UTM &_inicio, UTM &_fin, Fecha &_fecha, int _minutos, Moto *_moto
+    Itinerario it(id, inicio, fin, fecha, minutos, moto);
+    rutas.push_back(it);
 }
 
 void Cliente::crearItinerarios(int num, int IdUltimo, const UTM& min, const UTM& max) {
@@ -68,7 +70,11 @@ void Cliente::terminarTrayecto() {
     auto iterador = rutas.begin();
     Fecha fechafin;
     srand(time(NULL));
-    rutas.back().SetMinutos((fechafin.verHora()*60 + fechafin.verMin()) - (rutas.back().GetFecha().verHora()*60 + rutas.back().GetFecha().verMin()));
+    
+    rutas.back().SetMinutos(1 + rand()%((int)rutas.back().GetVehiculos()->getPorcentajeBateria() - 1));
+    
+    
+    //rutas.back().SetMinutos((fechafin.verHora()*60 + fechafin.verMin()) - (rutas.back().GetFecha().verHora()*60 + rutas.back().GetFecha().verMin()));
     rutas.back().SetFin(posicion);
     rutas.back().GetVehiculos()->setPosicion(posicion);
     rutas.back().GetVehiculos()->seDesactiva();

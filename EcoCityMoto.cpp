@@ -189,15 +189,16 @@ void EcoCityMoto::cargarClientes(std::string filename) {
                                 break;
                             }
                         }
-                        
                         client.addItinerario(stoi(id), fechaAux, stoi(minutositinerario), motoaux, inicio, fin);
                     }
                 }
-                std::pair <std::string, Cliente> par(dni, client);
+                if(client.GetNOMBRE()=="Wood Lafaye")
+                    cout<<client.GetDNI()<<endl;
+                std::pair <std::string, Cliente> par(client.GetDNI(), client);
                 clientes.insert(par);
-                if (total % 100 == 0) {
-                    cout << "Leido cliente " << total << "\n  ";
-                }
+//                if (total % 100 == 0) {
+//                    cout << "Leido cliente " << total << "\n  ";
+//                }
             }
             getline(ss,linea);
         }
@@ -256,9 +257,9 @@ void EcoCityMoto::cargarMotos(std::string filename) {
                 //con todos los atributos leidos, se crea la moto
                 Moto moto(mat, dlat, dlon, aux);
                 motos.push_back(moto);
-                if (total % 100 == 0) {
-                    std::cout << "Leida moto " << total << "\n  ";
-                }
+//                if (total % 100 == 0) {
+//                    std::cout << "Leida moto " << total << "\n  ";
+//                }
             }
             getline(fe, linea); //Toma una linea del fichero
         }
@@ -313,12 +314,17 @@ void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
     
     if(fs.good()){
         map<string,Cliente>::iterator it=clientes.begin();
+        //fs << "NIF;clave;nomape;dirección;latitud;longitud;nIti" << endl;
         fs << "NIF;clave;nomape;dirección;latitud;longitud;nIti" << endl;
         while (it!=clientes.end()){
             total++;
-            if(total%100==0)
-                cout<<"Guardado cliente "<<total<<endl;
+//            if(total%100==0)
+//                cout<<"Guardado cliente "<<total<<endl;
             Cliente cli=it->second;
+            if(cli.GetNOMBRE()=="Wood Lafaye"){
+                cout<<cli.GetDNI()<<" "<<total<<endl;
+            }    
+            
            // if (cli.GetDni()=="52525252X")
              //   cout << ",";
             list<Itinerario> r=cli.getItinerario();
@@ -332,7 +338,7 @@ void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
                    it2->GetFin().GetLongitud() <<";"<< it2->GetFecha().verDia() <<";"<<
                    it2->GetFecha().verMes() <<";"<< it2->GetFecha().verAnio() <<";"<<
                    it2->GetFecha().verHora() <<";"<< it2->GetFecha().verMin() <<";"<< 
-                   it2->GetMinutos() <<";"<< it2->GetVehiculos()->GetId() << endl;
+                   it2->GetMinutos() <<";"<< it2->GetVehiculos()->GetId()<<endl;
                 it2++;
             }
             it++;
@@ -360,9 +366,9 @@ void EcoCityMoto::setIdUltimo(unsigned int idUltimo) {
 
 std::vector<Moto> EcoCityMoto::localizaMotosSinBateria() {
     std::vector<Moto> aux;
-    for (int i = 0; i<this->motos.size(); i++) {
+    for (int i = 0; i<motos.size(); i++) {
         if (motos[i].getPorcentajeBateria() < 15) {
-            aux.push_back(this->motos[i]);
+            aux.push_back(motos[i]);
         }
     }
     return aux;
@@ -370,6 +376,5 @@ std::vector<Moto> EcoCityMoto::localizaMotosSinBateria() {
 
 Moto* EcoCityMoto::GetMotoRand(){
     int aux = rand()%1000;
-//    cout << motos[aux].GetId();
     return &(motos[aux]);
 }
