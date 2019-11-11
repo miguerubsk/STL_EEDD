@@ -151,14 +151,13 @@ id(_id), posicion(_latitud, _longitud) {
     } else {
         porcentajeBateria = _porcentajeBateria;
     }
-
-    if (porcentajeBateria < 15)
-        estado = SINBATERIA;
     switch (_estado) {
         case 0: estado = BLOQUEADA;
         case 1: estado = ACTIVA;
         case 2: estado = SINBATERIA;
         case 3: estado = ROTA;
     }
+        if (porcentajeBateria < 15)
+        estado = SINBATERIA;
 }
 

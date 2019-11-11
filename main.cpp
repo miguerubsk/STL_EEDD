@@ -114,7 +114,7 @@ int main(int argc, char** argv) {
         std::vector<Moto> probar;
         probar= prueba.localizaMotosSinBateria();
         cout<<"Hay "<<probar.size()<<" motos sin bateria."<<endl;
-        //buscado->desbloquearMoto(buscado->buscarMotoCercana());
+        buscado->desbloquearMoto(buscado->buscarMotoCercana());
         cout<<"PORCENTAGE inicial: "<<buscado->getItinerario().back().GetVehiculos()->getPorcentajeBateria()<<endl;
         cout<<"ESTADO inicial: "<<buscado->getItinerario().back().GetVehiculos()->getEstado()<<endl;
         buscado->terminarTrayecto();
