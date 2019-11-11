@@ -22,7 +22,7 @@
 
 class Itinerario {
 public:
-    Itinerario(int _id, UTM &_inicio, UTM &_fin, Fecha &_fecha, int _minutos, Moto *moto=0);
+    Itinerario(int _id, UTM &_inicio, UTM &_fin, Fecha &_fecha, int _minutos, Moto *moto);
     Itinerario(const Itinerario& orig);
     virtual ~Itinerario();
     Fecha GetFecha() const {

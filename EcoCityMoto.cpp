@@ -17,8 +17,8 @@
  * @brief contrusctor por defecto de EcoCityMoto
  **/
 EcoCityMoto::EcoCityMoto() : idUltimo(0), clientes(), motos() {
-    cargarClientes("clientes_v2.csv");
     cargarMotos("motos.txt");
+    cargarClientes("clientes_v2.csv");
 }
 
 /**
@@ -303,11 +303,11 @@ std::vector<Moto>* EcoCityMoto::GetMotos() {
 }
 
 void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
-ofstream fs;                    //Flujo de salida
+    ofstream fs; //Flujo de salida
 
     
     //Variables auxiliares para almacenar los valores leídos
-    
+    int total = 0;
     //Asociamos el flujo al fichero 
     fs.open(fileName,ofstream::trunc);
     
@@ -315,6 +315,9 @@ ofstream fs;                    //Flujo de salida
         map<string,Cliente>::iterator it=clientes.begin();
         fs << "NIF;clave;nomape;dirección;latitud;longitud;nIti" << endl;
         while (it!=clientes.end()){
+            total++;
+            if(total%100==0)
+                cout<<"Guardado cliente "<<total<<endl;
             Cliente cli=it->second;
            // if (cli.GetDni()=="52525252X")
              //   cout << ",";
@@ -329,7 +332,7 @@ ofstream fs;                    //Flujo de salida
                    it2->GetFin().GetLongitud() <<";"<< it2->GetFecha().verDia() <<";"<<
                    it2->GetFecha().verMes() <<";"<< it2->GetFecha().verAnio() <<";"<<
                    it2->GetFecha().verHora() <<";"<< it2->GetFecha().verMin() <<";"<< 
-                   it2->GetMinutos() <<";"/*<< it2->GetVehiculos()->GetId()*/ << endl;
+                   it2->GetMinutos() <<";"<< it2->GetVehiculos()->GetId() << endl;
                 it2++;
             }
             it++;
@@ -363,4 +366,10 @@ std::vector<Moto> EcoCityMoto::localizaMotosSinBateria() {
         }
     }
     return aux;
+}
+
+Moto* EcoCityMoto::GetMotoRand(){
+    int aux = rand()%1000;
+//    cout << motos[aux].GetId();
+    return &(motos[aux]);
 }

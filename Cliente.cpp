@@ -51,10 +51,11 @@ void Cliente::crearItinerarios(int num, int IdUltimo, const UTM& min, const UTM&
             fechaRandom.asignarDia(dia, mes, 2019);
             fechaRandom.asignarHora(hora, minutos);
             
-            //Moto *moto = &(acceso->GetMotos()->at(0));
+            Moto* moto = acceso->GetMotoRand();
             
             int minutosRandom = 0 + rand() % (120 - 0);
-            Itinerario itinerarioAux(++IdUltimo, inicio, fin, fechaRandom, minutosRandom);
+            
+            Itinerario itinerarioAux(++IdUltimo, inicio, fin, fechaRandom, minutosRandom, moto);
             
             rutas.push_back(itinerarioAux);
         }
