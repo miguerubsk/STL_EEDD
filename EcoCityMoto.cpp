@@ -321,9 +321,9 @@ void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
 //            if(total%100==0)
 //                cout<<"Guardado cliente "<<total<<endl;
             Cliente cli=it->second;
-            if(cli.GetNOMBRE()=="Wood Lafaye"){
-                cout<<cli.GetDNI()<<" "<<total<<endl;
-            }    
+//            if(cli.GetNOMBRE()=="Wood Lafaye"){
+//                cout<<cli.GetDNI()<<" "<<total<<endl;
+//            }    
             
            // if (cli.GetDni()=="52525252X")
              //   cout << ",";
