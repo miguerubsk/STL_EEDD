@@ -94,7 +94,7 @@ void EcoCityMoto::cargarClientes(std::string filename) {
 
             if (linea != "") {
                 ++total;
-            }
+            
 
             if (total > 1) {
                 //Inicializamos el contenido de ss
@@ -192,13 +192,12 @@ void EcoCityMoto::cargarClientes(std::string filename) {
                         client.addItinerario(stoi(id), fechaAux, stoi(minutositinerario), motoaux, inicio, fin);
                     }
                 }
-                if(client.GetNOMBRE()=="Wood Lafaye")
-                    cout<<client.GetDNI()<<endl;
                 std::pair <std::string, Cliente> par(client.GetDNI(), client);
                 clientes.insert(par);
 //                if (total % 100 == 0) {
 //                    cout << "Leido cliente " << total << "\n  ";
 //                }
+            }
             }
             getline(ss,linea);
         }
@@ -320,10 +319,7 @@ void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
             total++;
 //            if(total%100==0)
 //                cout<<"Guardado cliente "<<total<<endl;
-            Cliente cli=it->second;
-//            if(cli.GetNOMBRE()=="Wood Lafaye"){
-//                cout<<cli.GetDNI()<<" "<<total<<endl;
-//            }    
+            Cliente cli=it->second;  
             
            // if (cli.GetDni()=="52525252X")
              //   cout << ",";
