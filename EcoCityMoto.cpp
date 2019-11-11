@@ -325,10 +325,12 @@ void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
              //   cout << ",";
             list<Itinerario> r=cli.getItinerario();
             list<Itinerario>::iterator it2=r.begin();
+            fs << "NIF;clave;nomape;dirección;latitud;longitud;nIti" << endl;
             fs << cli.GetDNI() <<";"<< cli.getPass() <<";"<< cli.GetNOMBRE() <<";"<<
                   cli.GetDIRECCION() <<";"<< cli.getPosicion().GetLatitud() <<";"<<
                   cli.getPosicion().GetLongitud() <<";"<< cli.getItinerario().size() << endl;
             while (it2!=r.end()){
+                fs << "ID;LATITUD(inicio);LONGITUD(inicio);LATITUD(final);LONGITUD(final);DIA;MES;ANIO;HORA;MINUTOS;MATRICULA(MOTO);BATERIA" << endl;
                 fs << it2->GetId() <<";"<< it2->GetInicio().GetLatitud() <<";"<<
                    it2->GetInicio().GetLongitud() <<";"<< it2->GetFin().GetLatitud() <<";"<<
                    it2->GetFin().GetLongitud() <<";"<< it2->GetFecha().verDia() <<";"<<
