@@ -47,8 +47,10 @@ void Moto::setId(std::string id) {
 }
 
 void Moto::setPorcentajeBateria(float porcentajeBateria) {
-    if(porcentajeBateria<15) this->setEstado(SINBATERIA);
-        if (porcentajeBateria >= 0 && porcentajeBateria <= 100) {
+    if (porcentajeBateria < 15) {
+        this->setEstado(SINBATERIA);
+    }
+    if (porcentajeBateria >= 0 && porcentajeBateria <= 100) {
         this->porcentajeBateria = porcentajeBateria;
     } else {
         throw std::invalid_argument("Porcentaje de bateria erroneo");
