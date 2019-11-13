@@ -18,7 +18,7 @@
  **/
 EcoCityMoto::EcoCityMoto() : idUltimo(0), clientes(), motos() {
     cargarMotos("motos.txt");
-    cargarClientes("clientes_v2.csv");
+    cargarClientes("prueba.sav");
 }
 
 /**
@@ -115,32 +115,34 @@ void EcoCityMoto::cargarClientes(std::string filename) {
                     //calculamos Latitud y longitud max y min
                     if (dlon > maxLon)
                         maxLon = dlon;
-                    else
-                        if (dlon < minLon)
+                    if (dlon < minLon)
                         minLon = dlon;
 
                     if (dlat > maxLat)
                         maxLat = dlat;
-                    else
-                        if (dlat < minLat)
+                    if (dlat < minLat)
                         minLat = dlat;
 
                     //con todos los atributos leidos, se crea el cliente
                     //                cout<<dni<<endl;
-                    Cliente client(dni, pass, nombre, direccion, dlat, dlon, this);
+                    UTM min(minLat,maxLon), max(maxLat, maxLon);
+                    Cliente client(dni, pass, nombre, direccion, minLat, maxLon, this);
 
                     getline(ss, nItinerariosAux, ';'); //Leemos el número de itinerarios
                     //Comrueba si hay itinerarios
                     if (nItinerariosAux == "") {
                         //Si no hay crea algunos aleatorios
-                        int num = rand() % 100 + 1;
-                        client.crearItinerarios(num, idUltimoAux, minLat, maxLat);
+                        int num = rand() % 10 + 1;
+                        client.crearItinerarios(num, idUltimoAux, min, max);
                         idUltimoAux += num;
                     } else {
                         //Si hay los lee
                         nItinerarios = stoi(nItinerariosAux);
                         while (nItinerarios != 0) {
+                            getline(fe, linea); //Toma una linea del fichero
+                            stringstream ss;
                             nItinerarios--;
+                            ss << linea;
                             //Leemos el id
                             getline(ss, id, ';'); //El carácter ; se lee y se elimina de ss
                             //Leemos el dia de la fecha
@@ -155,7 +157,8 @@ void EcoCityMoto::cargarClientes(std::string filename) {
                             getline(ss, minutosfecha, ';'); //El caráter ; se lee y se elimina de ss
 
                             //Creamos la fecha
-                            Fecha fechaAux(stoi(dia), stoi(mes), stoi(anio), stoi(hora), stoi(minutosfecha));
+                            int diaaux = stoi(dia), mesaux = stoi(mes), anioaux = stoi(anio), horaaux = stoi(hora), minutosaux = stoi(minutosfecha); 
+                            Fecha fechaAux(diaaux,mesaux, anioaux, horaaux, minutosaux);
 
                             //Leemos los minutos del itinerario
                             getline(ss, minutositinerario, ';'); //El caráter ; se lee y se elimina de ss
@@ -198,7 +201,7 @@ void EcoCityMoto::cargarClientes(std::string filename) {
                     //                }
                 }
             }
-            getline(ss, linea);
+            getline(fe, linea);
         }
         cout << "Total de clientes en el fichero: " << total << endl;
         fe.close(); //Cerramos el flujo de entrada
@@ -327,12 +330,23 @@ void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
                     cli.GetDIRECCION() << ";" << cli.getPosicion().GetLatitud() << ";" <<
                     cli.getPosicion().GetLongitud() << ";" << cli.getItinerario().size() << endl;
             while (it2 != r.end()) {
-                fs << it2->GetId() << ";" << it2->GetInicio().GetLatitud() << ";" <<
-                        it2->GetInicio().GetLongitud() << ";" << it2->GetFin().GetLatitud() << ";" <<
-                        it2->GetFin().GetLongitud() << ";" << it2->GetFecha().verDia() << ";" <<
-                        it2->GetFecha().verMes() << ";" << it2->GetFecha().verAnio() << ";" <<
-                        it2->GetFecha().verHora() << ";" << it2->GetFecha().verMin() << ";" <<
-                        it2->GetMinutos() << ";" << it2->GetVehiculos()->GetId() << endl;
+                fs << it2->GetId() << ";" //Se escribe el id del 
+                        //Se escribe la fecha
+                        << it2->GetFecha().verDia() << ";" //Se escribe el dia
+                        << it2->GetFecha().verMes() << ";" //se escribe el mes
+                        << it2->GetFecha().verAnio() << ";" //Se escribe el año
+                        << it2->GetFecha().verHora() << ";" //se escribe la hora
+                        << it2->GetFecha().verMin() << ";" //Se escriben los minutos
+                        //Se escribe la duracion del itinerario
+                        << it2->GetMinutos() << ";" //Se escriben los minutos
+                        //Se escribe la posicion de inicio
+                        << it2->GetInicio().GetLatitud() << ";" //Se escribe la latitud
+                        << it2->GetInicio().GetLongitud() << ";" //Se escribe la longitud
+                        //Se escribe la posicion de fin
+                        << it2->GetFin().GetLatitud() << ";" //Se escribe la latitud
+                        << it2->GetFin().GetLongitud() << ";" //Se escribe la longitu
+                        //Se escribe la moto
+                        << it2->GetVehiculos()->GetId() << endl; //Se escribe la matrícula
                 it2++;
             }
             it++;
