@@ -72,7 +72,7 @@ void EcoCityMoto::desbloqueaMoto(Moto *moto, Cliente *cli) {
 void EcoCityMoto::cargarClientes(std::string filename) {
     ifstream fe; //Flujo de entrada
     string linea; //Cada linea tiene un clienete
-    int total = 0; //Contador de lineas o clientes
+    int total = 1; //Contador de lineas o clientes
 
     //Variables auxiliares para almacenar los valores leidos
     string dni, nombre, pass, direccion, latitud, longitud, nItinerariosAux, id, dia, mes, anio, hora, minutosfecha, minutositinerario, moto;
@@ -108,7 +108,8 @@ void EcoCityMoto::cargarClientes(std::string filename) {
                     getline(ss, direccion, ';'); //El carater ; se lee y se elimina de ss
                     //Leemos la latitud y longitud
                     getline(ss, latitud, ';'); //El carater ; se lee y se elimina de ss
-                    getline(ss, longitud, ';'); //El carater ; se lee y se elimina de ss                
+                    getline(ss, longitud, ';'); //El carater ; se lee y se elimina de ss          
+                    getline(ss, nItinerariosAux, ';'); //Leemos el número de itinerarios
 
                     dlat = stod(latitud);
                     dlon = stod(longitud);
@@ -128,7 +129,6 @@ void EcoCityMoto::cargarClientes(std::string filename) {
                     UTM min(minLat,maxLon), max(maxLat, maxLon);
                     Cliente client(dni, pass, nombre, direccion, minLat, maxLon, this);
 
-                    getline(ss, nItinerariosAux, ';'); //Leemos el número de itinerarios
                     //Comrueba si hay itinerarios
                     if (nItinerariosAux == "") {
                         //Si no hay crea algunos aleatorios
@@ -191,6 +191,8 @@ void EcoCityMoto::cargarClientes(std::string filename) {
                                     break;
                                 }
                             }
+                            if(id=="22939")
+                                cout<<id;
                             client.addItinerario(stoi(id), fechaAux, stoi(minutositinerario), motoaux, inicio, fin);
                         }
                     }
@@ -201,7 +203,7 @@ void EcoCityMoto::cargarClientes(std::string filename) {
                     //                }
                 }
             }
-            getline(fe, linea);
+         //   getline(fe, linea);
         }
         cout << "Total de clientes en el fichero: " << total << endl;
         fe.close(); //Cerramos el flujo de entrada
