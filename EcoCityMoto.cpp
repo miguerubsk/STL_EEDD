@@ -19,6 +19,7 @@
 EcoCityMoto::EcoCityMoto() : idUltimo(0), clientes(), motos() {
     cargarMotos("motos.txt");
     cargarClientes("prueba.sav");
+    //cargarClientes("clientes_v2.csv");
 }
 
 /**
@@ -191,8 +192,8 @@ void EcoCityMoto::cargarClientes(std::string filename) {
                                     break;
                                 }
                             }
-                            if(id=="22939")
-                                cout<<id;
+                            //if(id=="22939")
+                                //cout<<id;
                             client.addItinerario(stoi(id), fechaAux, stoi(minutositinerario), motoaux, inicio, fin);
                         }
                     }

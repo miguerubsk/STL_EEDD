@@ -59,13 +59,7 @@ void MaxMinLatLon(vector<Cliente> v, double &maxLon, double &maxLat, double &min
 int main(int argc, char** argv) {
     try {
         EcoCityMoto prueba;
-        //RECORRE EN INORDEN
-        //prueba.getCliente()->;
-        //ALTURA DEL AVL
-        //cout << "La altura del avl de los clientes es: " << prueba.getCliente()->altura() << endl;
         //NUMERO DE CLIENTES DEL AVL
-        
-        cout << "El numero de clientes del avl es: " << prueba.getCliente().size() << endl;
         Cliente cliente1, *buscado;
         cliente1.SetDni("24242105C");
         //BUSCAR CLIENTE CON DNI 67839521O
@@ -94,23 +88,18 @@ int main(int argc, char** argv) {
 //        cout << "Duracion:" << buscado->getItinerario().back().GetMinutos() << endl;
 //        cout << "Id de la moto:" << buscado->getItinerario().back().GetVehiculos()->GetId() << endl;7
         Cliente ejemplo("26529258T", "aguila","Fernando","tu puta casa",37.3, 38.4);
-        if(prueba.nuevoCliente(ejemplo)){
-            cout<<"SE HA AÑADIO EL CLIENTE"<<endl;
-        }else{
-        cout<<"NO SE HA AÑADIO EL CLIENTE"<<endl;
-        }
-        cout<<"El tamaño del mapa de los clientes es: "<<prueba.getCliente().size()<<endl;
-        Cliente *encontrado;
-        encontrado = prueba.buscarCliente("26529258T");
-        cout << "Cliente encontrado: " << endl;
-        cout << "DNI: " << encontrado->GetDNI() << endl;
-        cout << "Nombre: " << encontrado->GetNOMBRE() << endl;
-//        cout<<"Buscando moto cercana"<<endl;
-//        Moto *m=encontrado->buscarMotoCercana();
-//        cout << "Matricula de la moto: " << m->GetId()<<endl; 
-//        cout << "DNI del cliente que usa dicha moto: " << m->getUsadoPor()->GetDNI()<<endl;
-        
-        cout<<"Nº de itinerarios del cliente: "<<encontrado->getItinerario().size()<<endl;
+//        if(prueba.nuevoCliente(ejemplo)){
+//            cout<<"SE HA AÑADIO EL CLIENTE"<<endl;
+//        }else{
+//        cout<<"NO SE HA AÑADIO EL CLIENTE"<<endl;
+//        }
+//        Cliente *encontrado;
+//        encontrado = prueba.buscarCliente("26529258T");
+//        cout << "Cliente encontrado: " << endl;
+//        cout << "DNI: " << encontrado->GetDNI() << endl;
+//        cout << "Nombre: " << encontrado->GetNOMBRE() << endl;
+//        
+//        cout<<"Nº de itinerarios del cliente: "<<encontrado->getItinerario().size()<<endl;
         std::vector<Moto> probar;
         probar= prueba.localizaMotosSinBateria();
         cout<<"Hay "<<probar.size()<<" motos sin bateria."<<endl;
@@ -120,7 +109,11 @@ int main(int argc, char** argv) {
         buscado->terminarTrayecto();
         cout<<"PORCENTAJE final: "<<buscado->getItinerario().back().GetVehiculos()->getPorcentajeBateria()<<endl;
         cout<<"ESTADO final: "<<buscado->getItinerario().back().GetVehiculos()->getEstado()<<endl;
-        
+        cout<<"-----SIGNIFICADO DEL ESTADO-----"<<endl;
+        cout<<"0 = BLOQUEADA"<<endl;
+        cout<<"1 = ACTIVA"<<endl;
+        cout<<"2 = SINBATERIA"<<endl;
+        cout<<"3 = ROTA"<<endl;
     } catch (std::string &e) {
         cout << e << endl;
     } catch (std::invalid_argument &e) {
