@@ -63,7 +63,7 @@ float Moto::getPorcentajeBateria() const {
 }
 /**
  * @brief constructor copia de moto
- * @param A es la moto de la cual queremos hacer la copia
+ * @param orig es la moto de la cual queremos hacer la copia
  **/
 Moto::Moto(const Moto& orig): id(orig.id), usadoPor(orig.usadoPor), estado(orig.estado), posicion(orig.posicion), porcentajeBateria(orig.porcentajeBateria) {
 }
@@ -95,7 +95,7 @@ Status& Moto::getStatus() {
 }
 /**
  * @brief funcion del operador igual para la clase moto
- * @param A es la moto la cual queremos igualar
+ * @param orig es la moto la cual queremos igualar
  * @return devuelve la moto del resultado de hacer el igual
  **/
 Moto& Moto::operator=(const Moto &orig) {
@@ -109,7 +109,7 @@ Moto& Moto::operator=(const Moto &orig) {
 }
 /**
  * @brief funcion del operador menor para la clase moto
- * @param A es la moto la cual queremos comparar
+ * @param orig es la moto la cual queremos comparar
  * @return devuelve TRUE o FALSE dependiendo si es menor o mayor
  **/
 bool Moto::operator<(const Moto &orig){
@@ -117,7 +117,7 @@ bool Moto::operator<(const Moto &orig){
 }
 /**
  * @brief funcion del operador de comparacion para ordenar las motos
- * @param A es la moto la cual queremos comparar
+ * @param orig es la moto la cual queremos comparar
  * @return devuelve TRUE o FALSE dependiendo si es la misma o no
  **/
 bool Moto::operator==(const Moto &orig) {  //para ordenar las motos
@@ -125,7 +125,7 @@ bool Moto::operator==(const Moto &orig) {  //para ordenar las motos
 }
 /**
  * @brief funcion para activar la moto de un cliente
- * @param A es el cliente que vamos a usar para activarle la moto en cuestion
+ * @param cli es un puntero al cliente que vamos a usar para activarle la moto en cuestion
  **/
 bool Moto::seActiva(Cliente *cli){
     estado=ACTIVA;
