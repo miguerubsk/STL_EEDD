@@ -70,14 +70,15 @@ void Cliente::terminarTrayecto() {
     auto iterador = rutas.begin();
     Fecha fechafin;
     srand(time(NULL));
-    
-    rutas.back().SetMinutos(1 + rand()%((int)rutas.back().GetVehiculos()->getPorcentajeBateria() - 1));
+    int aux = 1 + rand() % ((int) rutas.back().GetVehiculos()->getPorcentajeBateria() - 1);
+    rutas.back().SetMinutos(aux);
     
     
     //rutas.back().SetMinutos((fechafin.verHora()*60 + fechafin.verMin()) - (rutas.back().GetFecha().verHora()*60 + rutas.back().GetFecha().verMin()));
     rutas.back().SetFin(posicion);
     rutas.back().GetVehiculos()->setPosicion(posicion);
     rutas.back().GetVehiculos()->seDesactiva();
+    rutas.back().GetVehiculos()->setPorcentajeBateria((rutas.back().GetVehiculos()->getPorcentajeBateria()) - (float) aux);
 }
 /**
      * @brief funcion para buscar la moto mas cercana al cliente en cuestion
