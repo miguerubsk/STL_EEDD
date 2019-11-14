@@ -170,6 +170,7 @@ id(_id), posicion(_latitud, _longitud) {
         case 1: estado = ACTIVA;
             break;
         case 2: estado = SINBATERIA;
+        porcentajeBateria= rand() % 14;
             break;
         case 3: estado = ROTA;
             break;
