@@ -22,14 +22,15 @@
 //#include "Cliente.h"
 class Cliente;
 
-enum Status {BLOQUEADA,ACTIVA,SINBATERIA,ROTA};
-
+enum Status {
+    BLOQUEADA, ACTIVA, SINBATERIA, ROTA
+};
 
 class Moto {
 public:
     Moto();
     Moto(const Moto& orig);
-    Moto(std::string _id, double _latitud, double _longitud, int _estado, float _porcentajeBateria=UINT_MAX);
+    Moto(std::string _id, double _latitud, double _longitud, int _estado, float _porcentajeBateria = UINT_MAX);
     UTM &getPosicion();
     std::string getId() const;
     Status &getStatus();
@@ -48,7 +49,7 @@ public:
     void setId(std::string id);
     void setPorcentajeBateria(float porcentajeBateria);
     float getPorcentajeBateria() const;
-    
+
 
 private:
     float porcentajeBateria;
