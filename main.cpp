@@ -87,22 +87,25 @@ int main(int argc, char** argv) {
 //        cout << "Fecha:" << buscado->getItinerario().back().GetFecha() << endl;
 //        cout << "Duracion:" << buscado->getItinerario().back().GetMinutos() << endl;
 //        cout << "Id de la moto:" << buscado->getItinerario().back().GetVehiculos()->GetId() << endl;7
-        Cliente ejemplo("26529258T", "aguila","Fernando","tu puta casa",37.3, 38.4);
-//        if(prueba.nuevoCliente(ejemplo)){
-//            cout<<"SE HA AÑADIO EL CLIENTE"<<endl;
-//        }else{
-//        cout<<"NO SE HA AÑADIO EL CLIENTE"<<endl;
-//        }
-//        Cliente *encontrado;
-//        encontrado = prueba.buscarCliente("26529258T");
-//        cout << "Cliente encontrado: " << endl;
-//        cout << "DNI: " << encontrado->GetDNI() << endl;
-//        cout << "Nombre: " << encontrado->GetNOMBRE() << endl;
-//        
-//        cout<<"Nº de itinerarios del cliente: "<<encontrado->getItinerario().size()<<endl;
+        Cliente ejemplo("26529258T", "aguila","Fernando","tu puta casa",37.3, 38.4, &prueba);
+        if(prueba.nuevoCliente(ejemplo)){
+            cout<<"-----SE HA AÑADIO EL CLIENTE-----"<<endl;
+            cout<<"DNI: "<<ejemplo.GetDNI()<<endl;
+            cout<<"Nombre: "<<ejemplo.GetNOMBRE()<<endl;
+            cout<<"Latitud: "<<ejemplo.GetUTM().GetLatitud()<<endl;
+            cout<<"Longitud: "<<ejemplo.GetUTM().GetLongitud()<<endl;
+            cout<<"---------------------------------"<<endl;
+        }else{
+        cout<<"-----NO SE HA AÑADIO EL CLIENTE-----"<<endl;
+        }
+        cout<<"Nº de clientes: "<<prueba.getCliente().size()<<endl;
+        
         std::vector<Moto> probar;
         probar= prueba.localizaMotosSinBateria();
         cout<<"Hay "<<probar.size()<<" motos sin bateria."<<endl;
+        
+        buscado = prueba.buscarCliente("26529258T");
+        
         buscado->desbloquearMoto(buscado->buscarMotoCercana());
         cout<<"PORCENTAJE inicial: "<<buscado->getItinerario().back().GetVehiculos()->getPorcentajeBateria()<<endl;
         cout<<"ESTADO inicial: "<<buscado->getItinerario().back().GetVehiculos()->getEstado()<<endl;
@@ -113,7 +116,16 @@ int main(int argc, char** argv) {
         cout<<"0 = BLOQUEADA"<<endl;
         cout<<"1 = ACTIVA"<<endl;
         cout<<"2 = SINBATERIA"<<endl;
-        cout<<"3 = ROTA"<<endl;
+        cout<<"3 = ROTA"<<endl;        
+        cout<<"--------------------------------"<<endl;
+        cout<<"Nº de clientes antes de eliminar: "<<prueba.getCliente().size()<<endl;
+        if(prueba.eliminarCliente(ejemplo)){
+            cout<<"El cliente "<<buscado->GetNOMBRE()<<" ha sido eliminado."<<endl;
+        }else{
+            cout<<"El cliente "<<buscado->GetNOMBRE()<<" no ha sido eliminado."<<endl;
+        }
+        cout<<"Nº de clientes despues de eliminar: "<<prueba.getCliente().size()<<endl;
+        
     } catch (std::string &e) {
         cout << e << endl;
     } catch (std::invalid_argument &e) {

@@ -206,7 +206,7 @@ void EcoCityMoto::cargarClientes(std::string filename) {
             }
          //   getline(fe, linea);
         }
-        cout << "Total de clientes en el fichero: " << total << endl;
+        cout << "Total de clientes en el fichero: " << clientes.size() << endl;
         fe.close(); //Cerramos el flujo de entrada
     } else {
         cerr << "No se puede abrir el fichero" << endl;
