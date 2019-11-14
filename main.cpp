@@ -37,95 +37,68 @@ double calculardistaciamaslejana(vector<Cliente> v) {
     return maxDistancia;
 }
 
-void MaxMinLatLon(vector<Cliente> v, double &maxLon, double &maxLat, double &minLon, double &minLat){
-       maxLon=-9999999, maxLat=-9999999, minLon=9999999, minLat=9999999;
-       for (int i=0; i<v.size(); i++){
-           double x=v[i].GetUTM().GetLongitud();
-           if (x>maxLon)
-               maxLon=x;
-           else
-               if (x<minLon)
-                   minLon=x;
-           x=v[i].GetUTM().GetLatitud();
-           if (x>maxLat)
-               maxLat=x;
-           else
-               if (x<minLat)
-                   minLat=x;
+void MaxMinLatLon(vector<Cliente> v, double &maxLon, double &maxLat, double &minLon, double &minLat) {
+    maxLon = -9999999, maxLat = -9999999, minLon = 9999999, minLat = 9999999;
+    for (int i = 0; i < v.size(); i++) {
+        double x = v[i].GetUTM().GetLongitud();
+        if (x > maxLon)
+            maxLon = x;
+        else
+            if (x < minLon)
+            minLon = x;
+        x = v[i].GetUTM().GetLatitud();
+        if (x > maxLat)
+            maxLat = x;
+        else
+            if (x < minLat)
+            minLat = x;
 
-       }
+    }
 }
 
 int main(int argc, char** argv) {
     try {
         EcoCityMoto prueba;
-        //NUMERO DE CLIENTES DEL AVL
-        Cliente cliente1, *buscado;
-        cliente1.SetDni("24242105C");
-        //BUSCAR CLIENTE CON DNI 67839521O
-        buscado = prueba.buscarCliente("67839521O");
-        cout << "Cliente encontrado: " << endl;
-        cout << "DNI: " << buscado->GetDNI() << endl;
-        cout << "Nombre: " << buscado->GetNOMBRE() << endl;
-        //DESBLOQUEAR MOTO
-//        buscado->desbloquearMoto(buscado->buscarMotoCercana());
-//        cout << "Se desbloquea la moto " << buscado->getItinerario().back().GetVehiculos()->GetId() << endl;
-//
-//        UTM max(37, 3), min(38, 4);
-//        mt19937 rnd(time(NULL));
-//        uniform_real_distribution<> latitud(min.GetLatitud(), max.GetLatitud());
-//        uniform_real_distribution<> longitud(min.GetLongitud(), max.GetLongitud());
-//        UTM fin(latitud(rnd), longitud(rnd));
-//
-//        buscado->SetPosicion(fin);
-//        //TERMINAR EL TRAYECTO
-//        buscado->terminarTrayecto();
-//        cout << "TERMINADO ITINERARIO" << endl;
-//        cout << "Id:" << buscado->getItinerario().back().GetId() << endl;
-//        cout << "UTM inicio:" << buscado->getItinerario().back().GetInicio().GetLatitud() << "<-->" << buscado->getItinerario().back().GetInicio().GetLongitud() << endl;
-//        cout << "UTM fin:" << buscado->getItinerario().back().GetFin().GetLatitud() << "<-->" << buscado->getItinerario().back().GetFin().GetLongitud() << endl;
-//        cout << "Fecha:" << buscado->getItinerario().back().GetFecha() << endl;
-//        cout << "Duracion:" << buscado->getItinerario().back().GetMinutos() << endl;
-//        cout << "Id de la moto:" << buscado->getItinerario().back().GetVehiculos()->GetId() << endl;7
-        Cliente ejemplo("26529258T", "aguila","Fernando","tu puta casa",37.3, 38.4, &prueba);
-        if(prueba.nuevoCliente(ejemplo)){
-            cout<<"-----SE HA AÑADIO EL CLIENTE-----"<<endl;
-            cout<<"DNI: "<<ejemplo.GetDNI()<<endl;
-            cout<<"Nombre: "<<ejemplo.GetNOMBRE()<<endl;
-            cout<<"Latitud: "<<ejemplo.GetUTM().GetLatitud()<<endl;
-            cout<<"Longitud: "<<ejemplo.GetUTM().GetLongitud()<<endl;
-            cout<<"---------------------------------"<<endl;
-        }else{
-        cout<<"-----NO SE HA AÑADIO EL CLIENTE-----"<<endl;
+        Cliente *buscado;
+        Cliente ejemplo("26529258T", "aguila", "Fernando", "tu puta casa", 37.3, 38.4, &prueba);
+        if (prueba.nuevoCliente(ejemplo)) {
+            cout << "-----SE HA AÑADIO EL CLIENTE-----" << endl;
+            cout << "DNI: " << ejemplo.GetDNI() << endl;
+            cout << "Nombre: " << ejemplo.GetNOMBRE() << endl;
+            cout << "Latitud: " << ejemplo.GetUTM().GetLatitud() << endl;
+            cout << "Longitud: " << ejemplo.GetUTM().GetLongitud() << endl;
+            cout << "---------------------------------" << endl;
+        } else {
+            cout << "-----NO SE HA AÑADIO EL CLIENTE-----" << endl;
         }
-        cout<<"Nº de clientes: "<<prueba.getCliente().size()<<endl;
-        
+        cout << "Nº de clientes: " << prueba.getCliente().size() << endl;
+
         std::vector<Moto> probar;
-        probar= prueba.localizaMotosSinBateria();
-        cout<<"Hay "<<probar.size()<<" motos sin bateria."<<endl;
-        
+        probar = prueba.localizaMotosSinBateria();
+        cout << "Hay " << probar.size() << " motos sin bateria." << endl;
+
         buscado = prueba.buscarCliente("26529258T");
-        
+
         buscado->desbloquearMoto(buscado->buscarMotoCercana());
-        cout<<"PORCENTAJE inicial: "<<buscado->getItinerario().back().GetVehiculos()->getPorcentajeBateria()<<endl;
-        cout<<"ESTADO inicial: "<<buscado->getItinerario().back().GetVehiculos()->getEstado()<<endl;
+        cout << "PORCENTAJE inicial: " << buscado->getItinerario().back().GetVehiculos()->getPorcentajeBateria() << endl;
+        cout << "ESTADO inicial: " << buscado->getItinerario().back().GetVehiculos()->getEstado() << endl;
         buscado->terminarTrayecto();
-        cout<<"PORCENTAJE final: "<<buscado->getItinerario().back().GetVehiculos()->getPorcentajeBateria()<<endl;
-        cout<<"ESTADO final: "<<buscado->getItinerario().back().GetVehiculos()->getEstado()<<endl;
-        cout<<"-----SIGNIFICADO DEL ESTADO-----"<<endl;
-        cout<<"0 = BLOQUEADA"<<endl;
-        cout<<"1 = ACTIVA"<<endl;
-        cout<<"2 = SINBATERIA"<<endl;
-        cout<<"3 = ROTA"<<endl;        
-        cout<<"--------------------------------"<<endl;
-        cout<<"Nº de clientes antes de eliminar: "<<prueba.getCliente().size()<<endl;
-        if(prueba.eliminarCliente(ejemplo)){
-            cout<<"El cliente "<<buscado->GetNOMBRE()<<" ha sido eliminado."<<endl;
-        }else{
-            cout<<"El cliente "<<buscado->GetNOMBRE()<<" no ha sido eliminado."<<endl;
+        cout << "PORCENTAJE final: " << buscado->getItinerario().back().GetVehiculos()->getPorcentajeBateria() << endl;
+        cout << "ESTADO final: " << buscado->getItinerario().back().GetVehiculos()->getEstado() << endl;
+        cout << "-----SIGNIFICADO DEL ESTADO-----" << endl;
+        cout << "0 = BLOQUEADA" << endl;
+        cout << "1 = ACTIVA" << endl;
+        cout << "2 = SINBATERIA" << endl;
+        cout << "3 = ROTA" << endl;
+        cout << "--------------------------------" << endl;
+        cout << "Nº de clientes antes de eliminar: " << prueba.getCliente().size() << endl;
+        if (prueba.eliminarCliente(ejemplo)) {
+            cout << "El cliente " << buscado->GetNOMBRE() << " ha sido eliminado." << endl;
+        } else {
+            cout << "El cliente " << buscado->GetNOMBRE() << " no ha sido eliminado." << endl;
         }
-        cout<<"Nº de clientes despues de eliminar: "<<prueba.getCliente().size()<<endl;
-        
+        cout << "Nº de clientes despues de eliminar: " << prueba.getCliente().size() << endl;
+
     } catch (std::string &e) {
         cout << e << endl;
     } catch (std::invalid_argument &e) {

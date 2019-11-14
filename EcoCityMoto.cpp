@@ -127,7 +127,7 @@ void EcoCityMoto::cargarClientes(std::string filename) {
 
                     //con todos los atributos leidos, se crea el cliente
                     //                cout<<dni<<endl;
-                    UTM min(minLat,maxLon), max(maxLat, maxLon);
+                    UTM min(minLat, maxLon), max(maxLat, maxLon);
                     Cliente client(dni, pass, nombre, direccion, minLat, maxLon, this);
 
                     //Comrueba si hay itinerarios
@@ -158,8 +158,8 @@ void EcoCityMoto::cargarClientes(std::string filename) {
                             getline(ss, minutosfecha, ';'); //El caráter ; se lee y se elimina de ss
 
                             //Creamos la fecha
-                            int diaaux = stoi(dia), mesaux = stoi(mes), anioaux = stoi(anio), horaaux = stoi(hora), minutosaux = stoi(minutosfecha); 
-                            Fecha fechaAux(diaaux,mesaux, anioaux, horaaux, minutosaux);
+                            int diaaux = stoi(dia), mesaux = stoi(mes), anioaux = stoi(anio), horaaux = stoi(hora), minutosaux = stoi(minutosfecha);
+                            Fecha fechaAux(diaaux, mesaux, anioaux, horaaux, minutosaux);
 
                             //Leemos los minutos del itinerario
                             getline(ss, minutositinerario, ';'); //El caráter ; se lee y se elimina de ss
@@ -193,7 +193,7 @@ void EcoCityMoto::cargarClientes(std::string filename) {
                                 }
                             }
                             //if(id=="22939")
-                                //cout<<id;
+                            //cout<<id;
                             client.addItinerario(stoi(id), fechaAux, stoi(minutositinerario), motoaux, inicio, fin);
                         }
                     }
@@ -204,7 +204,7 @@ void EcoCityMoto::cargarClientes(std::string filename) {
                     //                }
                 }
             }
-         //   getline(fe, linea);
+            //   getline(fe, linea);
         }
         cout << "Total de clientes en el fichero: " << clientes.size() << endl;
         fe.close(); //Cerramos el flujo de entrada
@@ -214,7 +214,7 @@ void EcoCityMoto::cargarClientes(std::string filename) {
 }
 
 /**
- * @brief funcion para cargar las motos en el otro avl de EscoCityMotos
+ * @brief funcion para cargar las motos en vector de EscoCityMotos
  * @param A es el nombre del fichero
  **/
 void EcoCityMoto::cargarMotos(std::string filename) {
@@ -285,6 +285,11 @@ Cliente* EcoCityMoto::buscarCliente(std::string dni) {
     throw std::invalid_argument("No se ha encontrado al cliente");
 }
 
+/**
+ * @brief funcion para añadir un cliente nuevo o no al mapa
+ * @param A es el cliente que queremos añadir
+ * @return devuelve verdadero o falso segun si el cliente existe ya o no
+ **/
 bool EcoCityMoto::nuevoCliente(Cliente& c) {
     std::map<std::string, Cliente>::iterator i = clientes.find(c.GetDNI());
     if (i != clientes.end()) {
@@ -294,6 +299,11 @@ bool EcoCityMoto::nuevoCliente(Cliente& c) {
     return true;
 }
 
+/**
+ * @brief funcion para eliminar un cliente nuevo o no al mapa
+ * @param A es el cliente que queremos eliminar
+ * @return devuelve verdadero o falso segun si el cliente existe ya o no
+ **/
 bool EcoCityMoto::eliminarCliente(Cliente& c) {
     std::map<std::string, Cliente>::iterator i = clientes.find(c.GetDNI());
     if (i != clientes.end()) {
@@ -303,10 +313,18 @@ bool EcoCityMoto::eliminarCliente(Cliente& c) {
     throw std::invalid_argument("El cliente no existe");
 }
 
+/**
+ * @brief funcion para devolver el vector de motos
+ * @return devuelve un puntero al vector de motos
+ **/
 std::vector<Moto>* EcoCityMoto::GetMotos() {
     return &motos;
 }
 
+/**
+ * @brief funcion para guardar los cliente con su itinerario
+ * @param A es el nombre del fichero del que queremos leer
+ **/
 void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
     ofstream fs; //Flujo de salida
 
@@ -361,18 +379,34 @@ void EcoCityMoto::guardaClientesItinerarios(std::string fileName) {
     }
 }
 
+/**
+ * @brief funcion para devolver el mapa de clientes
+ * @return devuelve el mapa de clientes
+ **/
 std::map<std::string, Cliente>& EcoCityMoto::getCliente() {
     return clientes;
 }
 
+/**
+ * @brief funciom get para el idUltimo
+ * @return devuelve el valor de idUltimo
+ **/
 unsigned int EcoCityMoto::getIdUltimo() const {
     return idUltimo;
 }
 
+/**
+ * @brief funcion set para el idUltimo
+ * @param A es el valor que queremos modificar al idUltimo
+ **/
 void EcoCityMoto::setIdUltimo(unsigned int idUltimo) {
     this->idUltimo = idUltimo;
 }
 
+/**
+ * @brief funcion para agrupar las motos sin bateria
+ * @return devuelve un vector de las motos con una bateria menos del 15%
+ **/
 std::vector<Moto> EcoCityMoto::localizaMotosSinBateria() {
     std::vector<Moto> aux;
     for (int i = 0; i < motos.size(); i++) {
@@ -383,6 +417,10 @@ std::vector<Moto> EcoCityMoto::localizaMotosSinBateria() {
     return aux;
 }
 
+/**
+ * @brief funcion para tener una moto aleatoria dentro de las existentes
+ * @return devuelve la moto que busca aleatoriamente
+ **/
 Moto* EcoCityMoto::GetMotoRand() {
     int aux = rand() % 1000;
     return &(motos[aux]);
