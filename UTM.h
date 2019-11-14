@@ -16,24 +16,28 @@
 
 #include <math.h>
 
-
- class UTM{
- private:
+class UTM {
+private:
     double latitud;
     double longitud;
- public:
-    UTM (double _lat=0.0, double _long=0.0): latitud(_lat), longitud (_long){}
+public:
+
+    UTM(double _lat = 0.0, double _long = 0.0) : latitud(_lat), longitud(_long) {
+    }
+
     double GetLongitud() const {
-    return longitud;
+        return longitud;
     }
-    double distancia(const UTM &utm){
-        return sqrt(pow(utm.latitud-this->latitud,2)+pow(utm.longitud-this->longitud,2));
+
+    double distancia(const UTM &utm) {
+        return sqrt(pow(utm.latitud - this->latitud, 2) + pow(utm.longitud - this->longitud, 2));
     }
+
     double GetLatitud() const {
         return latitud;
     }
 
- };
+};
 
 
 #endif /* UTM_H */

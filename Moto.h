@@ -15,46 +15,44 @@
 #define MOTO_H
 
 #include <string>
+#include <stdexcept>
 #include "UTM.h"
+#include <ctime>
+#include <climits>
 //#include "Cliente.h"
 class Cliente;
 
-enum Status {BLOQUEADA,ACTIVA,SINBATERIA,ROTA};
-
+enum Status {
+    BLOQUEADA, ACTIVA, SINBATERIA, ROTA
+};
 
 class Moto {
 public:
     Moto();
-    Moto(std::string _id, double _latitud, double _longitud, int _estado) :
-        id(_id), posicion(_latitud, _longitud) {
-        switch(_estado){
-            case 0: estado = BLOQUEADA;
-            case 1: estado = ACTIVA;
-            case 2: estado = SINBATERIA;
-            case 3: estado = ROTA;
-        }
-    }
+    Moto(const Moto& orig);
+    Moto(std::string _id, double _latitud, double _longitud, int _estado, float _porcentajeBateria = UINT_MAX);
     UTM &getPosicion();
     std::string getId() const;
     Status &getStatus();
-    Moto(const Moto& orig);
     virtual ~Moto();
     Moto& operator=(const Moto &orig);
     bool operator<(const Moto &orig);
     bool operator==(const Moto &orig);
     bool seActiva(Cliente *cli);
     void seDesactiva();
-    std::string GetId() const {
-        return id;
-    }
+    std::string GetId() const;
     void setEstado(Status estado);
     Status getEstado() const;
     void setUsadoPor(Cliente* usadoPor);
     Cliente* getUsadoPor() const;
     void setPosicion(UTM posicion);
     void setId(std::string id);
+    void setPorcentajeBateria(float porcentajeBateria);
+    float getPorcentajeBateria() const;
+
 
 private:
+    float porcentajeBateria;
     std::string id;
     UTM posicion;
     Cliente *usadoPor;

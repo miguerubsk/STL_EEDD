@@ -4,15 +4,12 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>AVL.h</itemPath>
       <itemPath>Cliente.h</itemPath>
       <itemPath>EcoCityMoto.h</itemPath>
       <itemPath>Itinerario.h</itemPath>
-      <itemPath>ListaDEnlazada.h</itemPath>
       <itemPath>Moto.h</itemPath>
       <itemPath>UTM.h</itemPath>
       <itemPath>fecha.h</itemPath>
-      <itemPath>vectordinamico.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -49,9 +46,10 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <ccTool>
+          <standard>11</standard>
+        </ccTool>
       </compileType>
-      <item path="AVL.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Cliente.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Cliente.h" ex="false" tool="3" flavor2="0">
@@ -64,8 +62,6 @@
       </item>
       <item path="Itinerario.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ListaDEnlazada.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Moto.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Moto.h" ex="false" tool="3" flavor2="0">
@@ -77,8 +73,6 @@
       <item path="fecha.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="vectordinamico.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -101,8 +95,6 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="AVL.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Cliente.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Cliente.h" ex="false" tool="3" flavor2="0">
@@ -115,8 +107,6 @@
       </item>
       <item path="Itinerario.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ListaDEnlazada.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Moto.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Moto.h" ex="false" tool="3" flavor2="0">
@@ -128,8 +118,6 @@
       <item path="fecha.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="vectordinamico.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

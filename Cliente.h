@@ -14,9 +14,10 @@
 #ifndef CLIENTE_H
 #define CLIENTE_H
 
+
 #include "Itinerario.h"
-#include "ListaDEnlazada.h"
 #include "EcoCityMoto.h"
+#include <list>
 #include <iostream>
 #include <math.h>
 #include <random>
@@ -24,9 +25,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-using namespace std;
-
 class EcoCityMoto;
+
+using namespace std;
 
 class Cliente {
 private:
@@ -34,12 +35,14 @@ private:
     string pass;
     string nombre;
     string direccion;
-    ListaDEnlazada<Itinerario> rutas;
+    list<Itinerario> rutas;
     EcoCityMoto *acceso;
     UTM posicion;
 
 
 public:
+
+    void addItinerario(int id, Fecha fecha, int minutos, Moto *moto, UTM inicio, UTM fin);
     //Constructor
 
     Cliente() : dni("0"), pass("0"), nombre("0"), direccion("0"), posicion(0.0, 0.0), rutas() {
@@ -49,10 +52,9 @@ public:
     dni(_dni), pass(_pass), nombre(_nombre), direccion(_direccion), posicion(_latitud, _longitud), acceso(_acceso) {
     }
 
-    Cliente(const Cliente& orig) : dni(orig.dni), pass(orig.pass), nombre(orig.nombre), direccion(orig.direccion),
-posicion(orig.posicion), rutas(orig.rutas), acceso(orig.acceso) {
-}
-    
+    Cliente(const Cliente& orig) : dni(orig.dni), pass(orig.pass), nombre(orig.nombre), direccion(orig.direccion), posicion(orig.posicion), rutas(orig.rutas), acceso(orig.acceso) {
+    }
+
     string GetDNI() const {
         return dni;
     }
@@ -107,13 +109,15 @@ posicion(orig.posicion), rutas(orig.rutas), acceso(orig.acceso) {
     }
 
     Cliente& operator=(const Cliente &orig) {
-        dni = orig.dni;
-        nombre = orig.nombre;
-        direccion = orig.direccion;
-        pass = orig.pass;
-        posicion = orig.posicion;
-        rutas = orig.rutas;
-        acceso = orig.acceso;
+        if (this != &orig) {
+            dni = orig.dni;
+            nombre = orig.nombre;
+            direccion = orig.direccion;
+            pass = orig.pass;
+            posicion = orig.posicion;
+            rutas = orig.rutas;
+            acceso = orig.acceso;
+        }
         return *this;
     }
 
@@ -121,38 +125,18 @@ posicion(orig.posicion), rutas(orig.rutas), acceso(orig.acceso) {
         return sqrt(pow((cli.posicion.GetLatitud() - this->posicion.GetLatitud()), 2) + pow((cli.posicion.GetLongitud() - this->posicion.GetLongitud()), 2));
     }
 
-    void crearItinerarios(int num, int IdUltimo, const UTM &min, const UTM &max) {
-        double lat;
-        double longi;
-        for (int i = 0; i < num; i++) {
-            //GENERAR COORDENADAS RANDOM
-            std::mt19937 rnd(std::time(NULL));
-            std::uniform_real_distribution<> latitud(min.GetLatitud(), max.GetLatitud());
-            std::uniform_real_distribution<> longitud(min.GetLongitud(), max.GetLongitud());
-            UTM inicio(latitud(rnd), longitud(rnd));
-            UTM fin(latitud(rnd), longitud(rnd));
-
-            //GENERAR FECHA RANDOM
-            Fecha fechaRandom;
-            srand(time(NULL) + IdUltimo + i);
-            int dia = 1 + rand() % (28 - 1);
-            int mes = 1 + rand() % (12 - 1);
-            int hora = 0 + rand() % (24 - 0);
-            int minutos = 0 + rand() % (60 - 0);
-            fechaRandom.asignarDia(dia, mes, 2019);
-            fechaRandom.asignarHora(hora, minutos);
-
-            int minutosRandom = 0 + rand() % (120 - 0);
-            Itinerario itinerarioAux(++IdUltimo, inicio, fin, fechaRandom, minutosRandom);
-            rutas.insertarFinal(itinerarioAux);
-        }
-    }
+    void crearItinerarios(int num, int IdUltimo, const UTM &min, const UTM &max);
     void desbloquearMoto(Moto *m);
     void terminarTrayecto();
     Moto * buscarMotoCercana();
-    ListaDEnlazada<Itinerario>& getItinerario();
+    list<Itinerario>& getItinerario();
+
     friend ostream& operator<<(ostream & os, const Cliente & obj);
-    
+    std::string GuardaCliente();
+    UTM getPosicion() const;
+    string getPass() const;
+
+
 };
 
 #endif /* CLIENTE_H */
