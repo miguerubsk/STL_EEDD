@@ -194,6 +194,8 @@ void EcoCityMoto::cargarClientes(std::string filename) {
                             }
                             //if(id=="22939")
                             //cout<<id;
+                            if(idUltimo<stoi(id))
+                                idUltimo=stoi(id);
                             client.addItinerario(stoi(id), fechaAux, stoi(minutositinerario), motoaux, inicio, fin);
                         }
                     }
